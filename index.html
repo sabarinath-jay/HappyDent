@@ -1,0 +1,1307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+    <title>Happy Dent Dental Care – Urapakkam</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    <style>
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+        :root{
+            --navy:#0B2545;--teal:#1B9AAA;--teal2:#0E7A88;--tealLight:#EAF8FA;
+            --gold:#C9953A;--white:#fff;--off:#F7FAFF;--text:#1A202C;--sub:#5A6A7A;
+            --border:#DDE8F0;--shadow:0 4px 28px rgba(11,37,69,.11);
+            --green:#38A169;--orange:#DD6B20;--red:#E53E3E;--blue:#3182CE;--purple:#6B46C1;
+        }
+        html{scroll-behavior:smooth}
+        body{font-family:'DM Sans',sans-serif;color:var(--text);background:#fff;overflow-x:hidden}
+        a{text-decoration:none;color:inherit}
+        ::-webkit-scrollbar{width:6px}::-webkit-scrollbar-thumb{background:var(--teal);border-radius:3px}
+        .view{display:none}.view.active{display:block}
+
+        /* ── PUBLIC SITE ── */
+        .container{max-width:1160px;margin:0 auto;padding:0 24px}
+        .top-banner{background:var(--navy);color:#fff;padding:9px 24px;text-align:center;font-size:13px;display:flex;align-items:center;justify-content:center;gap:16px;flex-wrap:wrap}
+        .top-banner i{color:#67D6E4}.tb-sep{color:rgba(255,255,255,.3)}
+        #pub-header{position:sticky;top:0;z-index:999;background:rgba(255,255,255,.97);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
+        #pub-header.scrolled{box-shadow:0 2px 20px rgba(11,37,69,.12)}
+        .header-inner{display:flex;align-items:center;justify-content:space-between;height:72px;gap:16px}
+        .logo{display:flex;align-items:center;gap:12px;flex-shrink:0;cursor:pointer}
+        .logo-icon{width:46px;height:46px;border-radius:12px;background:linear-gradient(135deg,var(--navy),var(--teal));display:flex;align-items:center;justify-content:center;font-size:22px}
+        .logo-text .name{font-family:'Playfair Display',serif;font-size:20px;font-weight:700;color:var(--navy);line-height:1.1}
+        .logo-text .tag{font-size:10px;color:var(--teal);letter-spacing:2px;text-transform:uppercase;font-weight:600}
+        nav a{padding:8px 14px;border-radius:8px;font-size:14px;font-weight:500;color:var(--sub);transition:.2s}
+        nav a:hover,nav a.active{color:var(--teal);background:var(--tealLight)}
+        .btn-appt{background:var(--teal);color:#fff;border:none;padding:10px 20px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+        .btn-appt:hover{background:var(--teal2)}
+        .menu-toggle{display:none;background:none;border:none;font-size:22px;color:var(--navy);cursor:pointer}
+        .mobile-nav{display:none;flex-direction:column;gap:4px;background:#fff;border-top:1px solid var(--border);padding:12px 24px 20px}
+        .mobile-nav a{padding:12px 16px;border-radius:8px;font-size:15px;font-weight:500;color:var(--sub);display:block}
+        /* hero */
+        #hero{padding-top:72px;min-height:100vh;display:flex;align-items:center;background:linear-gradient(135deg,#0B2545 0%,#134074 55%,#1B6A78 100%);position:relative;overflow:hidden}
+        .hero-inner{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;padding:80px 0;position:relative}
+        .hero-title{font-family:'Playfair Display',serif;font-size:clamp(36px,5vw,58px);font-weight:800;color:#fff;line-height:1.13;margin-bottom:20px}
+        .hero-title span{color:#67D6E4}
+        .hero-card{background:rgba(255,255,255,.1);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.18);border-radius:24px;padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .stat-card{background:rgba(255,255,255,.12);border-radius:16px;padding:22px 18px;text-align:center}
+        .stat-num{font-family:'Playfair Display',serif;font-size:34px;font-weight:800;color:#fff}
+        /* sections */
+        section.pub{padding:80px 24px}
+        .section-label{display:inline-block;font-size:12px;font-weight:700;color:var(--teal);letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+        .section-title{font-family:'Playfair Display',serif;font-size:clamp(28px,4vw,40px);font-weight:700;color:var(--navy);margin-bottom:14px;line-height:1.25}
+        .section-title span{color:var(--teal)}
+        .section-sub{font-size:16px;color:var(--sub);line-height:1.8;max-width:560px}
+        .divider{width:48px;height:4px;background:linear-gradient(90deg,var(--teal),var(--navy));border-radius:2px;margin-top:16px}
+        .divider.center{margin:16px auto 0}
+        .services-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+        .service-card{background:#fff;border-radius:18px;padding:26px;border:1px solid var(--border);transition:.25s;overflow:hidden;position:relative}
+        .service-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--teal),var(--navy));transform:scaleX(0);transform-origin:left;transition:.3s}
+        .service-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}.service-card:hover::before{transform:scaleX(1)}
+        .why-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+        .why-card{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.12);border-radius:18px;padding:26px;transition:.2s}
+        .why-card:hover{background:rgba(27,154,170,.18);border-color:rgba(27,154,170,.45)}
+        .reviews-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:20px}
+        .review-card{background:#fff;border-radius:18px;padding:24px;border:1px solid var(--border);display:flex;flex-direction:column;gap:12px}
+        /* booking form */
+        .book-grid{display:grid;grid-template-columns:1fr 1.3fr;gap:56px;align-items:start}
+        .book-form-box{background:#fff;border-radius:22px;padding:36px;box-shadow:0 16px 48px rgba(0,0,0,.2)}
+        .form-row-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+        .fg{margin-bottom:14px}
+        .fg label{display:block;font-size:12px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px}
+        .fg input,.fg select,.fg textarea{width:100%;padding:12px 15px;border:2px solid var(--border);border-radius:10px;font-size:15px;font-family:inherit;color:var(--text);outline:none;background:#FAFCFF;transition:.2s}
+        .fg input:focus,.fg select:focus,.fg textarea:focus{border-color:var(--teal)}
+        .fg textarea{resize:vertical;min-height:80px}
+        .btn-submit{width:100%;padding:15px;background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit;transition:.25s;box-shadow:0 4px 16px rgba(27,154,170,.35)}
+        .btn-submit:hover{transform:translateY(-2px)}.btn-submit:disabled{opacity:.6;cursor:not-allowed;transform:none}
+        /* contact */
+        .contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:44px;align-items:start}
+        .contact-card{background:#fff;border-radius:14px;padding:18px 20px;border:1px solid var(--border);display:flex;gap:14px;align-items:flex-start;margin-bottom:12px}
+        .cc-icon{width:42px;height:42px;border-radius:9px;background:var(--tealLight);display:flex;align-items:center;justify-content:center;color:var(--teal);font-size:17px;flex-shrink:0}
+        footer{background:#060F1A;color:rgba(255,255,255,.55);padding:52px 24px 24px}
+        .footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr;gap:44px;margin-bottom:40px}
+        .footer-col h4{font-size:13px;font-weight:700;color:#fff;margin-bottom:16px;text-transform:uppercase;letter-spacing:.5px}
+        .footer-col ul{list-style:none;display:flex;flex-direction:column;gap:9px}
+        .footer-col ul li a{font-size:13px;color:rgba(255,255,255,.5);transition:.2s}
+        .footer-col ul li a:hover{color:var(--teal)}
+        .wa-float{position:fixed;bottom:28px;right:28px;z-index:998;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:#fff;font-size:26px;box-shadow:0 4px 20px rgba(37,211,102,.45);transition:.25s}
+        .wa-float:hover{transform:scale(1.08)}
+        /* notification status badge */
+        .notif-row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+        .notif-tag{display:inline-flex;align-items:center;gap:5px;padding:4px 10px;border-radius:20px;font-size:12px;font-weight:600}
+        .notif-ok{background:#F0FFF4;color:#276749;border:1px solid #9AE6B4}
+        .notif-off{background:#FFFBEB;color:#92400E;border:1px solid #FDE68A}
+
+        /* ── ADMIN LOGIN ── */
+        #view-admin-login{min-height:100vh;background:linear-gradient(135deg,#0B2545,#1B9AAA);display:flex;align-items:center;justify-content:center;padding:20px}
+        .al-card{background:#fff;border-radius:24px;padding:48px 42px;width:100%;max-width:420px;box-shadow:0 32px 64px rgba(0,0,0,.35);position:relative}
+        .al-card::before{content:'';position:absolute;top:0;left:0;right:0;height:5px;border-radius:24px 24px 0 0;background:linear-gradient(90deg,var(--navy),var(--teal))}
+        .al-inp{width:100%;padding:13px 16px;border:2px solid var(--border);border-radius:10px;font-size:15px;outline:none;box-sizing:border-box;font-family:inherit;color:var(--text);background:#FAFCFF;transition:.2s}
+        .al-inp:focus{border-color:var(--teal)}
+        .al-btn{width:100%;padding:15px;background:linear-gradient(135deg,var(--navy),var(--teal));color:#fff;border:none;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:inherit}
+        .al-btn:disabled{opacity:.6;cursor:not-allowed}
+        .al-error{background:#FFF5F5;border:1px solid #FEB2B2;border-radius:8px;padding:10px 14px;margin-bottom:16px;font-size:13px;color:#C53030}
+
+        /* ── ADMIN DASHBOARD ── */
+        #view-admin-dashboard{min-height:100vh;background:#F0F4F8;font-family:'DM Sans',sans-serif}
+        .adm-topbar{background:var(--navy);height:62px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:100;box-shadow:0 2px 12px rgba(0,0,0,.25)}
+        .adm-brand{display:flex;align-items:center;gap:10px}
+        .adm-icon{width:36px;height:36px;border-radius:9px;background:linear-gradient(135deg,var(--teal),rgba(255,255,255,.2));display:flex;align-items:center;justify-content:center;font-size:17px}
+        .adm-tabs{display:flex;gap:4px}
+        .adm-tab{padding:8px 16px;border-radius:8px;border:none;font-size:13px;font-weight:600;cursor:pointer;font-family:inherit;color:rgba(255,255,255,.65);background:transparent;transition:.2s;display:flex;align-items:center;gap:7px}
+        .adm-tab.active{background:rgba(27,154,170,.3);color:#fff;border:1px solid rgba(27,154,170,.5)}
+        .adm-tab:hover:not(.active){background:rgba(255,255,255,.1);color:#fff}
+        .adm-right{display:flex;gap:10px;align-items:center}
+        .adm-body{max-width:1300px;margin:0 auto;padding:28px 24px}
+        /* stats */
+        .stats-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+        .s-card{background:#fff;border-radius:14px;padding:20px;border:1px solid var(--border);display:flex;align-items:center;gap:14px}
+        .s-icon{width:48px;height:48px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+        .s-num{font-family:'Playfair Display',serif;font-size:30px;font-weight:800;color:var(--navy);line-height:1}
+        .s-lbl{font-size:12px;color:var(--sub);margin-top:2px}
+        /* table card */
+        .tcard{background:#fff;border-radius:16px;border:1px solid var(--border);overflow:hidden;box-shadow:0 2px 10px rgba(11,37,69,.06)}
+        .tcard-header{padding:18px 22px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px}
+        .tcard-title{font-size:16px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:7px}
+        .tcontrols{display:flex;align-items:center;gap:9px;flex-wrap:wrap}
+        .sbox{display:flex;align-items:center;gap:7px;background:var(--off);border:1px solid var(--border);border-radius:9px;padding:8px 13px}
+        .sbox input{border:none;outline:none;background:transparent;font-size:14px;font-family:inherit;color:var(--text);width:180px}
+        .ftabs{display:flex;gap:5px;flex-wrap:wrap}
+        .ftab{padding:6px 13px;border-radius:7px;border:1px solid var(--border);background:#fff;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit;color:var(--sub);transition:.2s}
+        .ftab.active{background:var(--navy);color:#fff;border-color:var(--navy)}
+        .main-table{width:100%;border-collapse:collapse}
+        .main-table th{padding:11px 15px;text-align:left;font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;background:#F8FAFC;border-bottom:1px solid var(--border)}
+        .main-table td{padding:13px 15px;font-size:13px;color:var(--text);border-bottom:1px solid #F0F4F8;vertical-align:middle}
+        .main-table tr:last-child td{border-bottom:none}
+        .main-table tr:hover td{background:#FAFCFF}
+        .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:20px;font-size:11px;font-weight:700}
+        .badge-pending{background:#FFFBEB;color:#92400E;border:1px solid #FDE68A}
+        .badge-confirmed{background:#F0FFF4;color:#276749;border:1px solid #9AE6B4}
+        .badge-cancelled{background:#FFF5F5;color:#9B2C2C;border:1px solid #FEB2B2}
+        .badge-completed{background:#EBF8FF;color:#1A365D;border:1px solid #90CDF4}
+        .act{padding:5px 10px;border-radius:6px;border:none;font-size:11px;font-weight:700;cursor:pointer;font-family:inherit;margin-right:3px;transition:.15s}
+        .act-v{background:#F0FAFB;color:var(--teal);border:1px solid rgba(27,154,170,.3)}
+        .act-v:hover{background:var(--teal);color:#fff}
+        .act-ok{background:#F0FFF4;color:var(--green);border:1px solid #9AE6B4}
+        .act-ok:hover{background:var(--green);color:#fff}
+        .act-x{background:#FFF5F5;color:var(--red);border:1px solid #FEB2B2}
+        .act-x:hover{background:var(--red);color:#fff}
+        .act-blue{background:#EBF8FF;color:var(--blue);border:1px solid #90CDF4}
+        .act-blue:hover{background:var(--blue);color:#fff}
+        .act-purple{background:#FAF5FF;color:var(--purple);border:1px solid #D6BCFA}
+        .act-purple:hover{background:var(--purple);color:#fff}
+        .tbl-empty{padding:52px;text-align:center;color:var(--sub)}
+        .tbl-loading{padding:36px;text-align:center;color:var(--sub)}
+        /* patient card grid */
+        .pat-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:18px}
+        .pat-card{background:#fff;border-radius:14px;padding:22px;border:1px solid var(--border);transition:.2s}
+        .pat-card:hover{box-shadow:var(--shadow)}
+        .pat-avatar{width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:800;color:#fff;flex-shrink:0}
+        /* report cards */
+        .rpt-list{display:flex;flex-direction:column;gap:12px}
+        .rpt-row{background:#fff;border-radius:12px;padding:16px 20px;border:1px solid var(--border);display:flex;align-items:center;gap:16px}
+        .rpt-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0}
+        /* settings */
+        .settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+        .set-card{background:#fff;border-radius:16px;padding:26px;border:1px solid var(--border)}
+        .set-card h3{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:6px;display:flex;align-items:center;gap:8px}
+        .set-card p{font-size:13px;color:var(--sub);margin-bottom:18px;line-height:1.6}
+        .set-inp{width:100%;padding:11px 14px;border:2px solid var(--border);border-radius:9px;font-size:14px;font-family:inherit;color:var(--text);outline:none;background:#FAFCFF;transition:.2s;margin-bottom:10px}
+        .set-inp:focus{border-color:var(--teal)}
+        .set-btn{padding:10px 20px;border-radius:9px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit;transition:.2s}
+        .set-save{background:var(--teal);color:#fff}
+        .set-save:hover{background:var(--teal2)}
+        .set-test{background:var(--off);color:var(--navy);border:1px solid var(--border)}
+        .set-test:hover{background:var(--tealLight);border-color:var(--teal);color:var(--teal)}
+        /* modal */
+        .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:2000;align-items:center;justify-content:center;padding:20px}
+        .overlay.open{display:flex}
+        .modal{background:#fff;border-radius:20px;padding:30px;max-width:540px;width:100%;max-height:90vh;overflow-y:auto;box-shadow:0 24px 48px rgba(0,0,0,.3)}
+        .modal h3{font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:20px}
+        .mdetail{display:flex;gap:10px;margin-bottom:9px;font-size:14px}
+        .mdetail strong{color:var(--navy);min-width:110px;flex-shrink:0}
+        .mdetail span{color:var(--sub)}
+        .modal-actions{display:flex;gap:9px;margin-top:22px;flex-wrap:wrap}
+        .modal-actions button{flex:1;padding:11px;border-radius:9px;border:none;font-size:13px;font-weight:700;cursor:pointer;font-family:inherit}
+        /* toast */
+        .toast{position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(80px);background:#1A202C;color:#fff;padding:12px 22px;border-radius:12px;font-size:14px;font-weight:600;z-index:9999;transition:.3s;opacity:0;white-space:nowrap;pointer-events:none}
+        .toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+        .toast.success{background:#276749}.toast.error{background:#9B2C2C}.toast.info{background:var(--navy)}
+        /* upload area */
+        .upload-area{border:2px dashed var(--border);border-radius:12px;padding:32px;text-align:center;cursor:pointer;transition:.2s;background:#FAFCFF}
+        .upload-area:hover,.upload-area.dragover{border-color:var(--teal);background:var(--tealLight)}
+        .upload-area input[type=file]{display:none}
+        /* setup guide */
+        .guide-step{display:flex;gap:14px;padding:16px;background:var(--off);border-radius:12px;border:1px solid var(--border);margin-bottom:12px}
+        .guide-num{width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:13px;flex-shrink:0}
+        pre.code{background:#1A202C;color:#68D391;padding:14px;border-radius:9px;font-size:11px;overflow-x:auto;margin-top:8px;line-height:1.7;white-space:pre}
+
+        /* ── RESPONSIVE ── */
+        @media(max-width:900px){
+            nav{display:none}.menu-toggle{display:block}
+            .hero-inner{grid-template-columns:1fr;padding:60px 0}.hero-card{display:none}
+            .book-grid,.contact-grid,.footer-grid{grid-template-columns:1fr;gap:28px}
+            .stats-row{grid-template-columns:1fr 1fr}
+            .adm-tabs{display:none}
+            .settings-grid{grid-template-columns:1fr}
+        }
+        @media(max-width:600px){
+            section.pub{padding:56px 16px}
+            .stats-row{grid-template-columns:1fr 1fr}
+            .form-row-2{grid-template-columns:1fr}
+            .footer-grid{grid-template-columns:1fr}
+            .main-table th:nth-child(4),.main-table td:nth-child(4){display:none}
+        }
+    </style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════
+     VIEW 1 — PUBLIC WEBSITE
+═══════════════════════════════════════════════ -->
+<div id="view-public" class="view active">
+
+    <div class="top-banner">
+        <span><i class="fas fa-map-marker-alt"></i> No 82, GST Road, Urapakkam – 603210</span>
+        <span class="tb-sep">|</span>
+        <span><i class="fas fa-clock"></i> Mon–Fri: 9AM–8PM &nbsp;|&nbsp; Sat: 9AM–6PM &nbsp;|&nbsp; Sun: 10AM–2PM</span>
+        <span class="tb-sep">|</span>
+        <span><i class="fas fa-star"></i> Rated 4.7/5 • 52+ Reviews</span>
+    </div>
+
+    <header id="pub-header">
+        <div class="container">
+            <div class="header-inner">
+                <div class="logo" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+                    <div class="logo-icon">🦷</div>
+                    <div class="logo-text"><div class="name">Happy Dent</div><div class="tag">Dental Care</div></div>
+                </div>
+                <nav id="pubNav">
+                    <a href="#hero" class="active">Home</a><a href="#services">Services</a>
+                    <a href="#about">About</a><a href="#reviews">Reviews</a><a href="#contact">Contact</a>
+                </nav>
+                <div style="display:flex;align-items:center;gap:10px">
+                    <button class="btn-appt" onclick="document.getElementById('appointment').scrollIntoView({behavior:'smooth'})">📅 Book Appointment</button>
+                    <button class="menu-toggle" id="menuBtn" onclick="toggleMenu()"><i class="fas fa-bars"></i></button>
+                </div>
+            </div>
+        </div>
+        <div class="mobile-nav" id="mobileNav">
+            <a href="#hero" onclick="closeMenu()">Home</a><a href="#services" onclick="closeMenu()">Services</a>
+            <a href="#about" onclick="closeMenu()">About</a><a href="#reviews" onclick="closeMenu()">Reviews</a>
+            <a href="#contact" onclick="closeMenu()">Contact</a>
+            <button class="btn-appt" style="width:100%;padding:13px;margin-top:8px;border-radius:10px" onclick="closeMenu();document.getElementById('appointment').scrollIntoView({behavior:'smooth'})">📅 Book Appointment</button>
+        </div>
+    </header>
+
+    <!-- HERO -->
+    <section id="hero">
+        <div style="position:absolute;top:-120px;right:-120px;width:500px;height:500px;border-radius:50%;background:rgba(27,154,170,.14);pointer-events:none"></div>
+        <div style="position:absolute;bottom:-80px;left:-80px;width:360px;height:360px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none"></div>
+        <div class="container">
+            <div class="hero-inner">
+                <div>
+                    <div style="display:inline-flex;align-items:center;gap:8px;background:rgba(27,154,170,.22);border:1px solid rgba(27,154,170,.45);border-radius:20px;padding:7px 18px;font-size:13px;color:#86E4F0;margin-bottom:22px;font-weight:600"><i class="fas fa-map-marker-alt"></i> GST Road, Urapakkam, Chengalpattu</div>
+                    <h1 class="hero-title">Your Smile Is Our<br/><span>Greatest Reward</span></h1>
+                    <p style="font-size:17px;color:rgba(255,255,255,.78);line-height:1.8;margin-bottom:34px;max-width:480px">Advanced multi-specialty dental care trusted by thousands of families for over a decade. Modern technology, expert specialists, affordable prices.</p>
+                    <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:40px">
+                        <button class="btn-submit" style="width:auto;padding:15px 30px;font-size:15px" onclick="document.getElementById('appointment').scrollIntoView({behavior:'smooth'})">📅 Book Appointment</button>
+                        <button style="background:transparent;color:#fff;border:2px solid rgba(255,255,255,.38);padding:15px 30px;border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;font-family:inherit" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">Explore Services →</button>
+                    </div>
+                    <div style="display:flex;gap:20px;flex-wrap:wrap">
+                        <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.7)"><i class="fas fa-check-circle" style="color:#67D6E4"></i> Painless Care</div>
+                        <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.7)"><i class="fas fa-check-circle" style="color:#67D6E4"></i> No Long Waits</div>
+                        <div style="display:flex;align-items:center;gap:7px;font-size:13px;color:rgba(255,255,255,.7)"><i class="fas fa-check-circle" style="color:#67D6E4"></i> All Ages Welcome</div>
+                    </div>
+                </div>
+                <div class="hero-card">
+                    <div class="stat-card"><div class="stat-num">10+</div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:5px">Years Excellence</div></div>
+                    <div class="stat-card"><div class="stat-num">5K+</div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:5px">Happy Patients</div></div>
+                    <div class="stat-card"><div class="stat-num">10</div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:5px">Specialties</div></div>
+                    <div class="stat-card"><div class="stat-num">100%</div><div style="font-size:12px;color:rgba(255,255,255,.7);margin-top:5px">Sterilised</div></div>
+                    <div style="grid-column:1/-1;background:rgba(27,154,170,.2);border-radius:14px;padding:18px 20px;display:flex;align-items:center;gap:16px;border:1px solid rgba(27,154,170,.35)">
+                        <div><div style="font-size:22px;color:#F59E0B;letter-spacing:2px">★★★★★</div><div style="font-family:'Playfair Display',serif;font-size:28px;font-weight:800;color:#fff">4.7</div><div style="font-size:12px;color:rgba(255,255,255,.65)">52 verified reviews</div></div>
+                        <div style="margin-left:auto;background:rgba(255,255,255,.15);border-radius:10px;padding:10px 16px;text-align:center"><div style="font-size:20px;font-weight:800;color:#fff">52+</div><div style="font-size:10px;color:rgba(255,255,255,.6);letter-spacing:1px">REVIEWS</div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STATS BAR -->
+    <div style="background:var(--teal);color:#fff;padding:20px 24px">
+        <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;max-width:860px;margin:0 auto;text-align:center">
+            <div><div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:800">10+</div><div style="font-size:12px;opacity:.85;margin-top:2px">Years of Excellence</div></div>
+            <div><div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:800">5,000+</div><div style="font-size:12px;opacity:.85;margin-top:2px">Patients Treated</div></div>
+            <div><div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:800">4.7 ★</div><div style="font-size:12px;opacity:.85;margin-top:2px">Average Rating</div></div>
+            <div><div style="font-family:'Playfair Display',serif;font-size:26px;font-weight:800">52+</div><div style="font-size:12px;opacity:.85;margin-top:2px">5-Star Reviews</div></div>
+        </div>
+    </div>
+
+    <!-- SERVICES -->
+    <section id="services" class="pub" style="background:var(--off)">
+        <div class="container">
+            <div style="text-align:center;margin-bottom:48px">
+                <span class="section-label">What We Offer</span>
+                <h2 class="section-title">Comprehensive <span>Dental Services</span></h2>
+                <p class="section-sub" style="margin:0 auto">From routine check-ups to complete smile transformations — all under one roof.</p>
+                <div class="divider center"></div>
+            </div>
+            <div class="services-grid" id="servicesGrid"></div>
+        </div>
+    </section>
+
+    <!-- ABOUT -->
+    <section id="about" class="pub" style="background:#fff">
+        <div class="container">
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:center">
+                <div style="background:linear-gradient(135deg,var(--navy),var(--teal));border-radius:22px;aspect-ratio:4/5;display:flex;align-items:center;justify-content:center;font-size:100px;position:relative">🏥
+                    <div style="position:absolute;bottom:20px;left:-16px;background:#fff;border-radius:14px;padding:16px 20px;box-shadow:0 8px 28px rgba(11,37,69,.18);display:flex;gap:12px;align-items:center;border:1px solid var(--border)">
+                        <div style="width:40px;height:40px;border-radius:9px;background:linear-gradient(135deg,var(--teal),var(--navy));display:flex;align-items:center;justify-content:center;color:#fff;font-size:17px"><i class="fas fa-award"></i></div>
+                        <div><div style="font-family:'Playfair Display',serif;font-size:20px;font-weight:800;color:var(--navy)">10+</div><div style="font-size:11px;color:var(--sub)">Years Trusted Care</div></div>
+                    </div>
+                </div>
+                <div>
+                    <span class="section-label">About Happy Dent</span>
+                    <h2 class="section-title">Caring for <span>Smiles</span> Since 2013</h2>
+                    <p style="font-size:15px;color:var(--sub);line-height:1.85;margin:14px 0">Happy Dent Dental Care was founded with one purpose — exceptional dental treatment in a warm, comfortable environment. Located on GST Road, Urapakkam, we've been the trusted dental home for thousands of families across Chengalpattu for over a decade.</p>
+                    <div class="divider"></div>
+                    <div style="display:flex;flex-direction:column;gap:12px;margin-top:22px">
+                        <div style="display:flex;gap:12px;padding:14px 18px;background:var(--off);border-radius:11px;border:1px solid var(--border)"><div style="width:36px;height:36px;border-radius:8px;background:var(--tealLight);display:flex;align-items:center;justify-content:center;color:var(--teal);flex-shrink:0"><i class="fas fa-microscope"></i></div><div><div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px">State-of-the-Art Technology</div><div style="font-size:13px;color:var(--sub)">Digital X-rays, laser dentistry, advanced sterilisation systems.</div></div></div>
+                        <div style="display:flex;gap:12px;padding:14px 18px;background:var(--off);border-radius:11px;border:1px solid var(--border)"><div style="width:36px;height:36px;border-radius:8px;background:var(--tealLight);display:flex;align-items:center;justify-content:center;color:var(--teal);flex-shrink:0"><i class="fas fa-user-md"></i></div><div><div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px">Expert Specialist Team</div><div style="font-size:13px;color:var(--sub)">Dedicated specialists for every branch of dentistry.</div></div></div>
+                        <div style="display:flex;gap:12px;padding:14px 18px;background:var(--off);border-radius:11px;border:1px solid var(--border)"><div style="width:36px;height:36px;border-radius:8px;background:var(--tealLight);display:flex;align-items:center;justify-content:center;color:var(--teal);flex-shrink:0"><i class="fas fa-heart"></i></div><div><div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:2px">Patient-First Philosophy</div><div style="font-size:13px;color:var(--sub)">Genuine warmth from your first call to final follow-up.</div></div></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY US -->
+    <section class="pub" style="background:var(--navy)">
+        <div class="container">
+            <div style="text-align:center;margin-bottom:48px">
+                <span class="section-label" style="color:#86E4F0">Why Choose Us</span>
+                <h2 class="section-title" style="color:#fff">The Happy Dent <span>Difference</span></h2>
+                <div class="divider center"></div>
+            </div>
+            <div class="why-grid">
+                <div class="why-card"><div style="font-size:34px;margin-bottom:12px">🏥</div><div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px">Modern Equipment</div><div style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.7">Digital X-rays, laser treatment, advanced sterilisation for safe, precise care.</div></div>
+                <div class="why-card"><div style="font-size:34px;margin-bottom:12px">🧑‍⚕️</div><div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px">Specialist Dentists</div><div style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.7">Experienced specialists across cosmetic, ortho, implants, and oral surgery.</div></div>
+                <div class="why-card"><div style="font-size:34px;margin-bottom:12px">💰</div><div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px">Affordable Pricing</div><div style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.7">Premium dental care at prices accessible for every family, no hidden costs.</div></div>
+                <div class="why-card"><div style="font-size:34px;margin-bottom:12px">⏱️</div><div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px">No Long Waits</div><div style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.7">Punctual appointments with proper scheduling — we respect your time.</div></div>
+                <div class="why-card"><div style="font-size:34px;margin-bottom:12px">😌</div><div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px">Pain-Free Care</div><div style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.7">Gentle, anxiety-free treatment using the latest techniques for comfort.</div></div>
+                <div class="why-card"><div style="font-size:34px;margin-bottom:12px">👪</div><div style="font-size:16px;font-weight:700;color:#fff;margin-bottom:8px">All Ages Welcome</div><div style="font-size:14px;color:rgba(255,255,255,.65);line-height:1.7">From children to seniors — comprehensive care for the whole family.</div></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS -->
+    <section id="reviews" class="pub" style="background:var(--off)">
+        <div class="container">
+            <div style="text-align:center;margin-bottom:48px">
+                <span class="section-label">Patient Stories</span>
+                <h2 class="section-title">What Our <span>Patients Say</span></h2>
+                <div class="divider center"></div>
+            </div>
+            <div style="background:#fff;border-radius:18px;padding:28px;margin-bottom:36px;border:1px solid var(--border);display:flex;gap:36px;align-items:center;flex-wrap:wrap;justify-content:center">
+                <div style="text-align:center"><div style="font-family:'Playfair Display',serif;font-size:68px;font-weight:800;color:var(--navy);line-height:1">4.7</div><div style="font-size:24px;color:#F59E0B;letter-spacing:3px;margin:6px 0">★★★★★</div><div style="font-size:13px;color:var(--sub)">Based on 52 verified reviews</div></div>
+                <div style="flex:1;min-width:200px">
+                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px"><span style="font-size:12px;color:var(--sub);width:26px">5★</span><div style="flex:1;height:9px;background:#E2E8F0;border-radius:5px;overflow:hidden"><div style="width:83%;height:100%;background:linear-gradient(90deg,#F59E0B,#FBBF24);border-radius:5px"></div></div><span style="font-size:11px;color:var(--sub);width:30px;text-align:right">83%</span></div>
+                    <div style="display:flex;align-items:center;gap:9px;margin-bottom:8px"><span style="font-size:12px;color:var(--sub);width:26px">4★</span><div style="flex:1;height:9px;background:#E2E8F0;border-radius:5px;overflow:hidden"><div style="width:12%;height:100%;background:#90CDF4;border-radius:5px"></div></div><span style="font-size:11px;color:var(--sub);width:30px;text-align:right">12%</span></div>
+                    <div style="display:flex;align-items:center;gap:9px"><span style="font-size:12px;color:var(--sub);width:26px">3★</span><div style="flex:1;height:9px;background:#E2E8F0;border-radius:5px;overflow:hidden"><div style="width:5%;height:100%;background:#CBD5E0;border-radius:5px"></div></div><span style="font-size:11px;color:var(--sub);width:30px;text-align:right">5%</span></div>
+                </div>
+            </div>
+            <div class="reviews-grid" id="reviewsGrid"></div>
+        </div>
+    </section>
+
+    <!-- APPOINTMENT (PUBLIC — NO LOGIN) -->
+    <section id="appointment" class="pub" style="background:linear-gradient(135deg,var(--navy),#1B6A78)">
+        <div class="container">
+            <div class="book-grid">
+                <div style="color:#fff">
+                    <span class="section-label" style="color:#86E4F0">Book Now</span>
+                    <h2 class="section-title" style="color:#fff">Schedule Your<br/><span style="color:#67D6E4">Appointment</span></h2>
+                    <p style="font-size:15px;color:rgba(255,255,255,.72);line-height:1.8;margin-top:10px">No login needed — just fill in your details and we'll confirm your slot promptly.</p>
+                    <div class="divider" style="background:linear-gradient(90deg,#67D6E4,rgba(255,255,255,.2))"></div>
+                    <div style="display:flex;flex-direction:column;gap:12px;margin-top:24px">
+                        <div style="display:flex;gap:11px;align-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:13px 16px"><i class="fas fa-check-circle" style="color:#67D6E4;font-size:17px"></i><span style="font-size:14px;color:rgba(255,255,255,.82)">Free first consultation for new patients</span></div>
+                        <div style="display:flex;gap:11px;align-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:13px 16px"><i class="fas fa-bell" style="color:#67D6E4;font-size:17px"></i><span style="font-size:14px;color:rgba(255,255,255,.82)">Instant notification sent to clinic via WhatsApp & Email</span></div>
+                        <div style="display:flex;gap:11px;align-items:center;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);border-radius:11px;padding:13px 16px"><i class="fas fa-phone-alt" style="color:#67D6E4;font-size:17px"></i><span style="font-size:14px;color:rgba(255,255,255,.82)">Confirmation call within 2 hours</span></div>
+                    </div>
+                    <!-- Notification status indicators -->
+                    <div id="notifStatus" class="notif-row" style="margin-top:20px"></div>
+                </div>
+                <div class="book-form-box">
+                    <div id="pubFormContent">
+                        <div style="font-family:'Playfair Display',serif;font-size:21px;font-weight:700;color:var(--navy);margin-bottom:5px">Book an Appointment</div>
+                        <p style="font-size:13px;color:var(--sub);margin-bottom:22px">No account needed. Fill in your details below.</p>
+                        <div class="form-row-2">
+                            <div class="fg"><label>Full Name *</label><input type="text" id="pName" placeholder="Your full name"/></div>
+                            <div class="fg"><label>Phone *</label><input type="tel" id="pPhone" placeholder="+91 XXXXX XXXXX"/></div>
+                        </div>
+                        <div class="fg"><label>Email</label><input type="email" id="pEmail" placeholder="your@email.com"/></div>
+                        <div class="form-row-2">
+                            <div class="fg"><label>Service Needed</label>
+                                <select id="pService">
+                                    <option value="">Select a service</option>
+                                    <option>Dental Check-up & Cleaning</option><option>Root Canal Treatment</option>
+                                    <option>Teeth Whitening</option><option>Dental Implants</option>
+                                    <option>Orthodontics (Braces)</option><option>Smile Makeover</option>
+                                    <option>Pediatric Dentistry</option><option>Tooth Extraction</option>
+                                    <option>Crowns & Bridges</option><option>Gum Treatment</option>
+                                </select>
+                            </div>
+                            <div class="fg"><label>Preferred Date</label><input type="date" id="pDate"/></div>
+                        </div>
+                        <div class="fg"><label>Message / Concern</label><textarea id="pMsg" placeholder="Describe your concern or any special requirements…"></textarea></div>
+                        <button class="btn-submit" id="pubSubmitBtn" onclick="submitBooking()">Request Appointment →</button>
+                        <p id="pubMsg" style="font-size:13px;margin-top:10px;text-align:center"></p>
+                    </div>
+                    <div id="pubSuccess" style="display:none;text-align:center;padding:40px 20px">
+                        <div style="font-size:56px;margin-bottom:14px">✅</div>
+                        <h3 style="font-family:'Playfair Display',serif;font-size:21px;color:var(--navy);margin-bottom:10px">Appointment Requested!</h3>
+                        <p style="font-size:14px;color:var(--sub);line-height:1.7">Thank you! The clinic has been notified and will call you back within 2 hours to confirm your appointment.</p>
+                        <button onclick="resetBooking()" style="margin-top:16px;background:var(--teal);color:#fff;border:none;padding:12px 22px;border-radius:9px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit">Book Another →</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact" class="pub" style="background:var(--off)">
+        <div class="container">
+            <div style="text-align:center;margin-bottom:44px"><span class="section-label">Find Us</span><h2 class="section-title">Contact <span>Information</span></h2><div class="divider center"></div></div>
+            <div class="contact-grid">
+                <div>
+                    <div class="contact-card"><div class="cc-icon"><i class="fas fa-map-marker-alt"></i></div><div><div style="font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Address</div><div style="font-size:14px;color:var(--sub);line-height:1.65">No 82, Near Ananthavalli School,<br/>GST Road, Urapakkam,<br/>Chengalpattu – 603210, Tamil Nadu</div></div></div>
+                    <div class="contact-card"><div class="cc-icon"><i class="fas fa-phone-alt"></i></div><div><div style="font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">Phone</div><div style="font-size:14px;color:var(--sub)">Call us to book or for any queries about treatment</div></div></div>
+                    <div class="contact-card"><div class="cc-icon"><i class="fab fa-whatsapp"></i></div><div><div style="font-size:11px;font-weight:700;color:var(--teal);text-transform:uppercase;letter-spacing:.5px;margin-bottom:4px">WhatsApp</div><div style="font-size:14px;color:var(--sub)">Message us anytime — quick replies for booking</div></div></div>
+                    <div style="background:#fff;border-radius:14px;padding:20px;border:1px solid var(--border)">
+                        <div style="font-size:14px;font-weight:700;color:var(--navy);margin-bottom:14px;display:flex;align-items:center;gap:7px"><i class="fas fa-clock" style="color:var(--teal)"></i> Opening Hours</div>
+                        <div style="display:flex;justify-content:space-between;padding:10px 13px;border-radius:8px;background:var(--tealLight);border:1px solid rgba(27,154,170,.3);font-size:13px;margin-bottom:5px"><span style="color:var(--sub)">Mon – Fri</span><span style="color:var(--teal);font-weight:600">9:00 AM – 8:00 PM</span></div>
+                        <div style="display:flex;justify-content:space-between;padding:10px 13px;border-radius:8px;background:var(--off);font-size:13px;margin-bottom:5px"><span style="color:var(--sub)">Saturday</span><span style="color:var(--teal);font-weight:600">9:00 AM – 6:00 PM</span></div>
+                        <div style="display:flex;justify-content:space-between;padding:10px 13px;border-radius:8px;background:var(--off);font-size:13px"><span style="color:var(--sub)">Sunday</span><span style="color:var(--teal);font-weight:600">10:00 AM – 2:00 PM</span></div>
+                    </div>
+                </div>
+                <div>
+                    <div style="border-radius:16px;overflow:hidden;box-shadow:var(--shadow);border:1px solid var(--border)"><iframe src="https://maps.google.com/maps?q=Urapakkam+Chengalpattu&output=embed" width="100%" height="360" style="border:0;display:block" allowfullscreen loading="lazy" title="Location"></iframe></div>
+                    <div style="background:linear-gradient(135deg,var(--navy),var(--teal));border-radius:14px;padding:18px 22px;margin-top:14px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+                        <div><div style="font-size:14px;font-weight:700;color:#fff">Get Directions</div><div style="font-size:12px;color:rgba(255,255,255,.65)">GST Road, Urapakkam, Chengalpattu</div></div>
+                        <a href="https://maps.google.com/?q=Urapakkam+Chengalpattu" target="_blank" style="background:#fff;color:var(--navy);padding:9px 18px;border-radius:9px;font-size:13px;font-weight:700;display:flex;align-items:center;gap:5px"><i class="fas fa-directions"></i> Open Maps</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="logo" style="margin-bottom:0"><div class="logo-icon">🦷</div><div class="logo-text"><div class="name" style="color:#fff">Happy Dent</div><div class="tag">Dental Care</div></div></div>
+                    <p style="font-size:13px;line-height:1.8;margin-top:14px;color:rgba(255,255,255,.5)">Multi-specialty dental care for the families of Urapakkam since 2013.</p>
+                    <div style="display:flex;gap:9px;margin-top:16px">
+                        <div style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(255,255,255,.6);cursor:pointer"><i class="fab fa-facebook-f"></i></div>
+                        <div style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(255,255,255,.6);cursor:pointer"><i class="fab fa-instagram"></i></div>
+                        <div style="width:36px;height:36px;border-radius:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.1);display:flex;align-items:center;justify-content:center;font-size:15px;color:rgba(255,255,255,.6);cursor:pointer"><i class="fab fa-whatsapp"></i></div>
+                    </div>
+                </div>
+                <div class="footer-col"><h4>Services</h4><ul><li><a href="#services">Check-up & Cleaning</a></li><li><a href="#services">Root Canal</a></li><li><a href="#services">Dental Implants</a></li><li><a href="#services">Orthodontics</a></li><li><a href="#services">Smile Makeover</a></li></ul></div>
+                <div class="footer-col"><h4>Quick Links</h4><ul><li><a href="#hero">Home</a></li><li><a href="#about">About Us</a></li><li><a href="#reviews">Reviews</a></li><li><a href="#appointment">Book Appointment</a></li><li><a href="#contact">Contact</a></li><li><a onclick="showView('admin-login')" style="cursor:pointer;color:rgba(255,255,255,.25)">Staff Portal</a></li></ul></div>
+            </div>
+            <div style="border-top:1px solid rgba(255,255,255,.08);padding-top:20px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;font-size:12px">
+                <span>© 2024 Happy Dent Dental Care, Urapakkam. All rights reserved.</span>
+                <span>No 82, GST Road, Urapakkam – 603210</span>
+            </div>
+        </div>
+    </footer>
+    <a href="https://wa.me/" target="_blank" class="wa-float"><i class="fab fa-whatsapp"></i></a>
+</div><!-- /view-public -->
+
+
+<!-- ═══════════════════════════════════════════════
+     VIEW 2 — ADMIN LOGIN
+═══════════════════════════════════════════════ -->
+<div id="view-admin-login" class="view">
+    <div style="min-height:100vh;background:linear-gradient(135deg,#0B2545,#1B9AAA);display:flex;align-items:center;justify-content:center;padding:20px;position:relative;overflow:hidden">
+        <div style="position:absolute;top:-100px;right:-100px;width:400px;height:400px;border-radius:50%;background:rgba(27,154,170,.15);pointer-events:none"></div>
+        <div style="position:absolute;bottom:-80px;left:-80px;width:320px;height:320px;border-radius:50%;background:rgba(255,255,255,.04);pointer-events:none"></div>
+        <div class="al-card">
+            <div style="text-align:center;margin-bottom:30px">
+                <div style="width:68px;height:68px;border-radius:50%;background:linear-gradient(135deg,var(--navy),var(--teal));margin:0 auto 14px;display:flex;align-items:center;justify-content:center;font-size:30px">🦷</div>
+                <h1 style="font-family:'Playfair Display',serif;font-size:25px;font-weight:700;color:var(--navy)">Admin Portal</h1>
+                <p style="font-size:12px;color:var(--teal);font-weight:700;letter-spacing:1.5px;text-transform:uppercase;margin-top:4px">Happy Dent Dental Care</p>
+            </div>
+            <p style="text-align:center;font-size:14px;color:var(--sub);margin-bottom:24px">Sign in to manage appointments, patients & reports</p>
+            <div style="margin-bottom:14px"><label style="display:block;font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Email Address</label><input type="email" id="adminEmail" class="al-inp" placeholder="admin@happydentclinic.in" onkeydown="if(event.key==='Enter')adminLogin()"/></div>
+            <div style="margin-bottom:20px"><label style="display:block;font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;margin-bottom:6px">Password</label>
+                <div style="position:relative"><input type="password" id="adminPass" class="al-inp" placeholder="••••••••" onkeydown="if(event.key==='Enter')adminLogin()" style="padding-right:44px"/><button onclick="togglePass()" style="position:absolute;right:13px;top:50%;transform:translateY(-50%);background:none;border:none;cursor:pointer;font-size:17px;color:#A0AEC0" id="passTgl">👁️</button></div>
+            </div>
+            <div id="alError" class="al-error" style="display:none"></div>
+            <button class="al-btn" id="alBtn" onclick="adminLogin()">Sign In →</button>
+            <p style="text-align:center;margin-top:16px;font-size:13px;color:var(--sub)"><a onclick="showView('public')" style="color:var(--teal);font-weight:600;cursor:pointer">← Back to website</a></p>
+        </div>
+    </div>
+</div>
+
+
+<!-- ═══════════════════════════════════════════════
+     VIEW 3 — ADMIN DASHBOARD
+═══════════════════════════════════════════════ -->
+<div id="view-admin-dashboard" class="view">
+
+    <div class="adm-topbar">
+        <div class="adm-brand">
+            <div class="adm-icon">🦷</div>
+            <div><div style="font-family:'Playfair Display',serif;font-size:17px;font-weight:700;color:#fff">Happy Dent</div><div style="font-size:9px;color:#86E4F0;letter-spacing:2px;text-transform:uppercase">Admin Portal</div></div>
+        </div>
+        <div class="adm-tabs">
+            <button class="adm-tab active" id="tabBtnAppt" onclick="switchTab('appt')"><i class="fas fa-calendar-alt"></i> Appointments</button>
+            <button class="adm-tab" id="tabBtnPat" onclick="switchTab('pat')"><i class="fas fa-users"></i> Patients</button>
+            <button class="adm-tab" id="tabBtnRpt" onclick="switchTab('rpt')"><i class="fas fa-file-medical"></i> Reports</button>
+            <button class="adm-tab" id="tabBtnSet" onclick="switchTab('set')"><i class="fas fa-cog"></i> Settings</button>
+        </div>
+        <div class="adm-right">
+            <span style="font-size:13px;color:rgba(255,255,255,.65)">Signed in as <span id="admEmailLbl" style="color:#fff;font-weight:600"></span></span>
+            <button onclick="showView('public')" style="background:var(--teal);border:none;color:#fff;padding:7px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit"><i class="fas fa-globe"></i> Website</button>
+            <button onclick="adminLogout()" style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.8);padding:7px 14px;border-radius:8px;font-size:12px;cursor:pointer;font-family:inherit"><i class="fas fa-sign-out-alt"></i> Logout</button>
+        </div>
+    </div>
+
+    <div class="adm-body">
+
+        <!-- APPOINTMENTS TAB -->
+        <div id="tab-appt">
+            <div style="margin-bottom:20px"><h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy)">Appointments</h2><p style="font-size:14px;color:var(--sub);margin-top:3px" id="todayLbl">Manage all patient appointment requests</p></div>
+            <div class="stats-row">
+                <div class="s-card"><div class="s-icon" style="background:#EBF8FF"><i class="fas fa-calendar-alt" style="color:var(--blue)"></i></div><div><div class="s-num" id="sTotal">—</div><div class="s-lbl">Total</div></div></div>
+                <div class="s-card"><div class="s-icon" style="background:#FFFBEB"><i class="fas fa-clock" style="color:#D97706"></i></div><div><div class="s-num" id="sPending">—</div><div class="s-lbl">Pending</div></div></div>
+                <div class="s-card"><div class="s-icon" style="background:#F0FFF4"><i class="fas fa-check-circle" style="color:var(--green)"></i></div><div><div class="s-num" id="sConfirmed">—</div><div class="s-lbl">Confirmed</div></div></div>
+                <div class="s-card"><div class="s-icon" style="background:var(--tealLight)"><i class="fas fa-calendar-day" style="color:var(--teal)"></i></div><div><div class="s-num" id="sToday">—</div><div class="s-lbl">Today</div></div></div>
+            </div>
+            <div class="tcard">
+                <div class="tcard-header">
+                    <div class="tcard-title"><i class="fas fa-list" style="color:var(--teal)"></i> All Appointments</div>
+                    <div class="tcontrols">
+                        <div class="sbox"><i class="fas fa-search" style="color:var(--sub);font-size:13px"></i><input type="text" id="apptSearch" placeholder="Search name or phone…" oninput="renderAppts()"/></div>
+                        <div class="ftabs">
+                            <button class="ftab active" onclick="setApptFilter('all',this)">All</button>
+                            <button class="ftab" onclick="setApptFilter('pending',this)">Pending</button>
+                            <button class="ftab" onclick="setApptFilter('confirmed',this)">Confirmed</button>
+                            <button class="ftab" onclick="setApptFilter('completed',this)">Completed</button>
+                            <button class="ftab" onclick="setApptFilter('cancelled',this)">Cancelled</button>
+                        </div>
+                        <button onclick="loadAll()" style="background:var(--tealLight);border:1px solid rgba(27,154,170,.3);color:var(--teal);padding:7px 13px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:inherit"><i class="fas fa-sync-alt"></i></button>
+                    </div>
+                </div>
+                <div id="apptTableWrap"><div class="tbl-loading"><i class="fas fa-spinner fa-spin" style="font-size:22px;color:var(--teal)"></i><br/><br/>Loading…</div></div>
+            </div>
+        </div>
+
+        <!-- PATIENTS TAB -->
+        <div id="tab-pat" style="display:none">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+                <div><h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy)">Patients</h2><p style="font-size:14px;color:var(--sub);margin-top:3px">Manage patient records and history</p></div>
+                <button onclick="openAddPatient()" style="background:var(--teal);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px"><i class="fas fa-user-plus"></i> Add Patient</button>
+            </div>
+            <div class="tcard" style="margin-bottom:20px">
+                <div class="tcard-header">
+                    <div class="tcard-title"><i class="fas fa-users" style="color:var(--teal)"></i> Patient Records</div>
+                    <div class="sbox"><i class="fas fa-search" style="color:var(--sub);font-size:13px"></i><input type="text" id="patSearch" placeholder="Search name or phone…" oninput="renderPatients()"/></div>
+                </div>
+                <div id="patTableWrap"><div class="tbl-loading"><i class="fas fa-spinner fa-spin" style="font-size:22px;color:var(--teal)"></i><br/><br/>Loading…</div></div>
+            </div>
+        </div>
+
+        <!-- REPORTS TAB -->
+        <div id="tab-rpt" style="display:none">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px;flex-wrap:wrap;gap:10px">
+                <div><h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy)">Patient Reports</h2><p style="font-size:14px;color:var(--sub);margin-top:3px">Upload and manage X-rays, prescriptions, treatment reports</p></div>
+                <button onclick="openUploadReport()" style="background:var(--teal);color:#fff;border:none;padding:11px 20px;border-radius:10px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;gap:8px"><i class="fas fa-cloud-upload-alt"></i> Upload Report</button>
+            </div>
+            <div class="tcard">
+                <div class="tcard-header">
+                    <div class="tcard-title"><i class="fas fa-file-medical-alt" style="color:var(--teal)"></i> All Reports</div>
+                    <div class="sbox"><i class="fas fa-search" style="color:var(--sub);font-size:13px"></i><input type="text" id="rptSearch" placeholder="Search patient or title…" oninput="renderReports()"/></div>
+                </div>
+                <div id="rptListWrap" style="padding:20px"><div class="tbl-loading"><i class="fas fa-spinner fa-spin" style="font-size:22px;color:var(--teal)"></i><br/><br/>Loading…</div></div>
+            </div>
+        </div>
+
+        <!-- SETTINGS TAB -->
+        <div id="tab-set" style="display:none">
+            <div style="margin-bottom:20px"><h2 style="font-family:'Playfair Display',serif;font-size:26px;font-weight:700;color:var(--navy)">Settings & Notifications</h2><p style="font-size:14px;color:var(--sub);margin-top:3px">Configure your database, email and WhatsApp alerts</p></div>
+
+            <div class="settings-grid">
+
+                <!-- EmailJS -->
+                <div class="set-card">
+                    <h3><i class="fas fa-envelope" style="color:var(--teal)"></i> Email Notifications</h3>
+                    <p>Get an email whenever a new appointment is booked. Uses <strong>EmailJS</strong> — free up to 200 emails/month. <a href="https://emailjs.com" target="_blank" style="color:var(--teal)">Setup at emailjs.com →</a></p>
+                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">EmailJS Service ID</label>
+                    <input class="set-inp" id="ejServiceId" placeholder="service_xxxxxxx"/>
+                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">EmailJS Template ID</label>
+                    <input class="set-inp" id="ejTemplateId" placeholder="template_xxxxxxx"/>
+                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">EmailJS Public Key</label>
+                    <input class="set-inp" id="ejPublicKey" placeholder="xxxxxxxxxxxxxxxxxxxx"/>
+                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Notify Email (clinic email)</label>
+                    <input class="set-inp" id="ejToEmail" placeholder="admin@happydentclinic.in"/>
+                    <div style="display:flex;gap:9px;margin-top:4px">
+                        <button class="set-btn set-save" onclick="saveEmailSettings()">Save</button>
+                        <button class="set-btn set-test" onclick="testEmail()">Send Test</button>
+                    </div>
+                    <div id="ejStatus" style="margin-top:10px;font-size:13px"></div>
+                </div>
+
+                <!-- WhatsApp / Callmebot -->
+                <div class="set-card">
+                    <h3><i class="fab fa-whatsapp" style="color:#25D366"></i> WhatsApp Notifications</h3>
+                    <p>Get a WhatsApp message for every new booking. Uses <strong>CallMeBot</strong> — completely free. <a href="https://www.callmebot.com/blog/free-api-whatsapp-messages/" target="_blank" style="color:var(--teal)">Activate at callmebot.com →</a></p>
+                    <div style="background:#F0FFF4;border:1px solid #9AE6B4;border-radius:10px;padding:14px;margin-bottom:14px;font-size:13px;color:#276749;line-height:1.7">
+                        <strong>One-time activation:</strong><br/>
+                        Send <code style="background:rgba(0,0,0,.08);padding:2px 5px;border-radius:4px">I allow callmebot to send me messages</code> on WhatsApp to <strong>+34 644 65 22 25</strong>. You'll receive your API key instantly.
+                    </div>
+                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Your WhatsApp Number (with country code)</label>
+                    <input class="set-inp" id="waPhone" placeholder="+919XXXXXXXXX"/>
+                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Callmebot API Key</label>
+                    <input class="set-inp" id="waApiKey" placeholder="xxxxxxx"/>
+                    <div style="display:flex;gap:9px;margin-top:4px">
+                        <button class="set-btn set-save" onclick="saveWaSettings()">Save</button>
+                        <button class="set-btn set-test" onclick="testWhatsApp()">Send Test</button>
+                    </div>
+                    <div id="waStatus" style="margin-top:10px;font-size:13px"></div>
+                </div>
+
+                <!-- Supabase Config -->
+                <div class="set-card" style="grid-column:1/-1">
+                    <h3><i class="fas fa-database" style="color:var(--navy)"></i> Supabase Database Setup</h3>
+                    <p>Connect your Supabase database for persistent appointment, patient and report storage. Free tier available at <a href="https://supabase.com" target="_blank" style="color:var(--teal)">supabase.com</a></p>
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
+                        <div>
+                            <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Supabase Project URL</label>
+                            <input class="set-inp" id="sbUrl" placeholder="https://xxxx.supabase.co"/>
+                        </div>
+                        <div>
+                            <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Supabase Anon Key</label>
+                            <input class="set-inp" id="sbKey" placeholder="eyJxxxxxxxx…"/>
+                        </div>
+                    </div>
+                    <button class="set-btn set-save" onclick="saveSbSettings()" style="margin-bottom:20px">Save & Reconnect</button>
+                    <div style="border-top:1px solid var(--border);padding-top:18px"><strong style="font-size:14px;color:var(--navy)">Run this SQL in Supabase → SQL Editor:</strong>
+                        <pre class="code">-- Appointments table
+CREATE TABLE IF NOT EXISTS appointments (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL, phone TEXT NOT NULL, email TEXT,
+  service TEXT, preferred_date DATE, message TEXT,
+  status TEXT DEFAULT 'pending', notes TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Patients table
+CREATE TABLE IF NOT EXISTS patients (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  name TEXT NOT NULL, phone TEXT NOT NULL, email TEXT,
+  dob DATE, blood_group TEXT, address TEXT,
+  allergies TEXT, medical_history TEXT,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Reports table
+CREATE TABLE IF NOT EXISTS reports (
+  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
+  patient_id UUID REFERENCES patients(id) ON DELETE CASCADE,
+  title TEXT NOT NULL, description TEXT,
+  file_url TEXT, file_name TEXT, file_type TEXT,
+  report_date DATE DEFAULT CURRENT_DATE,
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Storage bucket (run separately or create in Supabase dashboard)
+-- INSERT INTO storage.buckets (id, name, public) VALUES ('reports', 'reports', false);
+
+-- Row Level Security
+ALTER TABLE appointments ENABLE ROW LEVEL SECURITY;
+ALTER TABLE patients ENABLE ROW LEVEL SECURITY;
+ALTER TABLE reports ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "public_book" ON appointments FOR INSERT TO anon WITH CHECK (true);
+CREATE POLICY "admin_appts" ON appointments FOR ALL TO authenticated USING (true);
+CREATE POLICY "admin_patients" ON patients FOR ALL TO authenticated USING (true);
+CREATE POLICY "admin_reports" ON reports FOR ALL TO authenticated USING (true);</pre>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div><!-- /view-admin-dashboard -->
+
+<!-- ═══ MODALS ═══ -->
+
+<!-- Appointment Detail Modal -->
+<div class="overlay" id="apptModal">
+    <div class="modal">
+        <h3 id="apptModalTitle">Appointment</h3>
+        <div id="apptModalBody"></div>
+        <div class="modal-actions" id="apptModalActions"></div>
+    </div>
+</div>
+
+<!-- Add/Edit Patient Modal -->
+<div class="overlay" id="patModal">
+    <div class="modal">
+        <h3 id="patModalTitle">Add Patient</h3>
+        <div class="form-row-2"><div class="fg"><label>Full Name *</label><input class="al-inp" id="pmName" placeholder="Patient name"/></div><div class="fg"><label>Phone *</label><input class="al-inp" id="pmPhone" placeholder="+91 XXXXX XXXXX"/></div></div>
+        <div class="form-row-2"><div class="fg"><label>Email</label><input class="al-inp" id="pmEmail" placeholder="email@example.com"/></div><div class="fg"><label>Date of Birth</label><input class="al-inp" type="date" id="pmDob"/></div></div>
+        <div class="form-row-2"><div class="fg"><label>Blood Group</label><select class="al-inp" id="pmBlood"><option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>AB+</option><option>AB-</option><option>O+</option><option>O-</option></select></div><div class="fg"><label>Allergies</label><input class="al-inp" id="pmAllergies" placeholder="e.g. Penicillin"/></div></div>
+        <div class="fg"><label>Address</label><input class="al-inp" id="pmAddress" placeholder="Full address"/></div>
+        <div class="fg"><label>Medical History / Notes</label><textarea class="al-inp" id="pmHistory" placeholder="Previous conditions, medications, notes…" style="min-height:80px;resize:vertical"></textarea></div>
+        <div style="display:flex;gap:10px;margin-top:6px">
+            <button class="set-btn set-save" style="flex:1;padding:13px;font-size:14px" onclick="savePatient()">Save Patient</button>
+            <button class="set-btn set-test" style="padding:13px 20px" onclick="closeModal('patModal')">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Upload Report Modal -->
+<div class="overlay" id="rptModal">
+    <div class="modal">
+        <h3>Upload Patient Report</h3>
+        <div class="fg"><label>Patient *</label>
+            <select class="al-inp" id="rptPatient"><option value="">Select patient…</option></select>
+        </div>
+        <div class="fg"><label>Report Title *</label><input class="al-inp" id="rptTitle" placeholder="e.g. X-Ray – Dec 2024, Root Canal Prescription"/></div>
+        <div class="fg"><label>Description</label><textarea class="al-inp" id="rptDesc" placeholder="Notes about this report…" style="min-height:70px;resize:vertical"></textarea></div>
+        <div class="fg"><label>Report Date</label><input class="al-inp" type="date" id="rptDate"/></div>
+        <div class="upload-area" id="uploadArea" onclick="document.getElementById('rptFile').click()" ondragover="event.preventDefault();this.classList.add('dragover')" ondragleave="this.classList.remove('dragover')" ondrop="handleDrop(event)">
+            <input type="file" id="rptFile" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx" onchange="handleFileSelect(this)"/>
+            <div id="uploadAreaContent">
+                <i class="fas fa-cloud-upload-alt" style="font-size:36px;color:var(--teal);margin-bottom:10px"></i>
+                <div style="font-weight:600;color:var(--navy);margin-bottom:5px">Click or drag file here</div>
+                <div style="font-size:13px;color:var(--sub)">Supports PDF, JPG, PNG, DOC (max 10MB)</div>
+            </div>
+        </div>
+        <div id="uploadProgress" style="display:none;margin-top:12px">
+            <div style="display:flex;justify-content:space-between;font-size:13px;margin-bottom:6px"><span id="uploadFileName" style="color:var(--navy);font-weight:600"></span><span id="uploadFileSize" style="color:var(--sub)"></span></div>
+            <div style="height:6px;background:#E2E8F0;border-radius:3px;overflow:hidden"><div id="uploadBar" style="height:100%;background:var(--teal);border-radius:3px;width:0%;transition:.3s"></div></div>
+        </div>
+        <div style="display:flex;gap:10px;margin-top:16px">
+            <button class="set-btn set-save" style="flex:1;padding:13px;font-size:14px" id="rptSaveBtn" onclick="saveReport()">Upload Report</button>
+            <button class="set-btn set-test" style="padding:13px 20px" onclick="closeModal('rptModal')">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- ═══════════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════════ -->
+<script>
+    /* ══ CONFIG — loaded from localStorage or defaults ══ */
+    let CFG = {
+        sbUrl: localStorage.getItem('sb_url') || '',
+        sbKey: localStorage.getItem('sb_key') || '',
+        ejServiceId: localStorage.getItem('ej_service') || '',
+        ejTemplateId: localStorage.getItem('ej_template') || '',
+        ejPublicKey: localStorage.getItem('ej_pubkey') || '',
+        ejToEmail: localStorage.getItem('ej_email') || '',
+        waPhone: localStorage.getItem('wa_phone') || '',
+        waApiKey: localStorage.getItem('wa_apikey') || '',
+    };
+    let sb = null, currentUser = null;
+    let allAppts = [], allPatients = [], allReports = [];
+    let apptFilter = 'all', editingPatientId = null, selectedFile = null;
+
+    /* ══ SUPABASE INIT ══ */
+    function initSb() {
+        if (CFG.sbUrl && CFG.sbUrl !== 'YOUR_SUPABASE_URL' && CFG.sbKey) {
+            sb = window.supabase.createClient(CFG.sbUrl, CFG.sbKey);
+            return true;
+        }
+        return false;
+    }
+    initSb();
+
+    /* ══ EMAILJS INIT ══ */
+    function initEmailJS() {
+        if (CFG.ejPublicKey) emailjs.init(CFG.ejPublicKey);
+    }
+    initEmailJS();
+
+    /* ══ VIEW MANAGER ══ */
+    function showView(v) {
+        document.querySelectorAll('.view').forEach(el => el.classList.remove('active'));
+        document.getElementById('view-' + v).classList.add('active');
+        window.scrollTo(0, 0);
+    }
+    function switchTab(t) {
+        ['appt','pat','rpt','set'].forEach(id => {
+            document.getElementById('tab-' + id).style.display = id === t ? 'block' : 'none';
+            document.getElementById('tabBtn' + id.charAt(0).toUpperCase() + id.slice(1)).classList.toggle('active', id === t);
+        });
+        if (t === 'appt') loadAppts();
+        if (t === 'pat') loadPatients();
+        if (t === 'rpt') loadReports();
+        if (t === 'set') populateSettings();
+    }
+
+    /* ══ STATIC DATA ══ */
+    const SVCS = [
+        {icon:'🦷',title:'Check-up & Cleaning',desc:'Comprehensive oral exam with professional scaling and polishing.',bg:'#E0F7FA'},
+        {icon:'🔬',title:'Root Canal Treatment',desc:'Advanced therapy to save infected teeth with minimal discomfort.',bg:'#E8F5E9'},
+        {icon:'✨',title:'Teeth Whitening',desc:'Professional bleaching for a noticeably brighter, whiter smile.',bg:'#FFF8E1'},
+        {icon:'🦿',title:'Dental Implants',desc:'Permanent tooth replacement that looks and feels completely natural.',bg:'#F3E5F5'},
+        {icon:'📐',title:'Orthodontics',desc:'Braces and clear aligners for a perfect, confident smile.',bg:'#E3F2FD'},
+        {icon:'💎',title:'Smile Makeover',desc:'Veneers, whitening, and contouring for your dream smile.',bg:'#FCE4EC'},
+        {icon:'👶',title:'Pediatric Dentistry',desc:'Gentle, child-friendly care that builds positive dental habits.',bg:'#FFF3E0'},
+        {icon:'🔧',title:'Tooth Extraction',desc:'Safe removal of problematic and wisdom teeth with expert aftercare.',bg:'#E8EAF6'},
+        {icon:'👑',title:'Crowns & Bridges',desc:'Quality porcelain restorations that look and function naturally.',bg:'#E0F2F1'},
+        {icon:'🩺',title:'Gum Treatment',desc:'Modern diagnosis and treatment of gum disease for lasting oral health.',bg:'#FFEBEE'},
+    ];
+    const REVS = [
+        {name:'Kavitha R.',r:5,date:'March 2024',t:'Root Canal',txt:'"Completely painless and the staff made me feel at ease. The doctor is knowledgeable, polite, and professional. Highly recommend!"',c:'#1B9AAA'},
+        {name:'Srinivasan K.',r:5,date:'January 2024',t:'Dental Implants',txt:'"Exceptional service. Implants look and feel natural. Spotlessly clean clinic. The doctor explains every step with great patience."',c:'#0B2545'},
+        {name:'Priya L.',r:5,date:'February 2024',t:'Smile Makeover',txt:'"Absolutely thrilled with my smile makeover results. Incredible team, incredible results. They use the most modern equipment."',c:'#C9953A'},
+        {name:'Anand M.',r:4,date:'December 2023',t:'Braces',txt:'"Great clinic with professional staff. Treatment progressing wonderfully. The doctor follows up regularly — shows genuine care."',c:'#6B46C1'},
+        {name:'Deepa S.',r:5,date:'November 2023',t:'Teeth Whitening',txt:'"Amazing whitening results — I can\'t stop smiling! Friendly staff, comfortable atmosphere. Definitely coming back."',c:'#B7791F'},
+        {name:'Rajesh P.',r:5,date:'October 2023',t:'Check-up & Cleaning',txt:'"Best clinic in Urapakkam. Affordable and top-notch quality. Thorough, attentive doctor and always immaculately clean."',c:'#276749'},
+    ];
+
+    /* Render services & reviews */
+    const sg = document.getElementById('servicesGrid');
+    SVCS.forEach(s => { sg.innerHTML += `<div class="service-card"><div style="width:54px;height:54px;border-radius:13px;background:${s.bg};display:flex;align-items:center;justify-content:center;font-size:24px;margin-bottom:16px">${s.icon}</div><div style="font-size:16px;font-weight:700;color:var(--navy);margin-bottom:8px">${s.title}</div><div style="font-size:13px;color:var(--sub);line-height:1.75">${s.desc}</div></div>`; });
+    const rg = document.getElementById('reviewsGrid');
+    REVS.forEach(r => { const st='★'.repeat(r.r)+'☆'.repeat(5-r.r); rg.innerHTML += `<div class="review-card"><div style="display:flex;justify-content:space-between;align-items:flex-start"><div style="display:flex;gap:10px;align-items:center"><div style="width:44px;height:44px;border-radius:50%;background:${r.c};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#fff">${r.name[0]}</div><div><div style="font-weight:700;color:var(--navy);font-size:14px">${r.name}</div><div style="font-size:11px;color:var(--sub)">${r.date}</div></div></div><span style="font-size:14px;color:#F59E0B;letter-spacing:1px">${st}</span></div><span style="display:inline-block;background:var(--tealLight);border-radius:6px;padding:3px 9px;font-size:12px;color:var(--teal);font-weight:600">🦷 ${r.t}</span><p style="font-size:13px;color:#4A5568;line-height:1.75;font-style:italic">${r.txt}</p><div style="font-size:12px;color:#48BB78;display:flex;align-items:center;gap:4px"><i class="fas fa-check-circle"></i> Verified Patient</div></div>`; });
+
+    /* Update notification badges on public site */
+    function updateNotifBadges() {
+        const el = document.getElementById('notifStatus');
+        const ejOk = !!(CFG.ejServiceId && CFG.ejTemplateId && CFG.ejPublicKey);
+        const waOk = !!(CFG.waPhone && CFG.waApiKey);
+        el.innerHTML = `
+    <span class="notif-tag ${ejOk?'notif-ok':'notif-off'}"><i class="fas fa-${ejOk?'check':'exclamation'}-circle"></i> Email ${ejOk?'Active':'Not configured'}</span>
+    <span class="notif-tag ${waOk?'notif-ok':'notif-off'}"><i class="fab fa-whatsapp"></i> WhatsApp ${waOk?'Active':'Not configured'}</span>`;
+    }
+    updateNotifBadges();
+
+    /* ══ PUBLIC BOOKING ══ */
+    async function submitBooking() {
+        const name = document.getElementById('pName').value.trim();
+        const phone = document.getElementById('pPhone').value.trim();
+        const email = document.getElementById('pEmail').value.trim();
+        const service = document.getElementById('pService').value;
+        const date = document.getElementById('pDate').value;
+        const msg = document.getElementById('pMsg').value.trim();
+        const msgEl = document.getElementById('pubMsg');
+        const btn = document.getElementById('pubSubmitBtn');
+        if (!name || !phone) { msgEl.style.color='var(--red)'; msgEl.textContent='Please enter your name and phone number.'; return; }
+        btn.disabled = true; btn.textContent = 'Submitting…'; msgEl.textContent = '';
+
+        /* Save to Supabase */
+        if (sb) {
+            const { error } = await sb.from('appointments').insert([{ name, phone, email, service, preferred_date: date || null, message: msg, status: 'pending' }]);
+            if (error) { btn.disabled=false; btn.textContent='Request Appointment →'; msgEl.style.color='var(--red)'; msgEl.textContent='Submit failed. Please try again or call us.'; return; }
+        }
+
+        /* Email notification */
+        if (CFG.ejServiceId && CFG.ejTemplateId && CFG.ejPublicKey) {
+            try {
+                await emailjs.send(CFG.ejServiceId, CFG.ejTemplateId, {
+                    to_email: CFG.ejToEmail, patient_name: name, patient_phone: phone,
+                    patient_email: email || 'Not provided', service: service || 'Not specified',
+                    preferred_date: date || 'Flexible', message: msg || 'No message',
+                    clinic_name: 'Happy Dent Dental Care', booking_time: new Date().toLocaleString('en-IN')
+                });
+            } catch(e) { console.warn('Email notification failed:', e); }
+        }
+
+        /* WhatsApp notification via Callmebot */
+        if (CFG.waPhone && CFG.waApiKey) {
+            const waMsg = encodeURIComponent(
+                `🦷 *New Appointment - Happy Dent*\n\n` +
+                `👤 *Patient:* ${name}\n📞 *Phone:* ${phone}\n` +
+                `🏥 *Service:* ${service || 'Not specified'}\n` +
+                `📅 *Date:* ${date || 'Flexible'}\n` +
+                `💬 *Message:* ${msg || 'None'}\n\n` +
+                `⏰ Booked: ${new Date().toLocaleString('en-IN')}`
+            );
+            try {
+                await fetch(`https://api.callmebot.com/whatsapp.php?phone=${CFG.waPhone}&text=${waMsg}&apikey=${CFG.waApiKey}`);
+            } catch(e) { console.warn('WhatsApp notification failed:', e); }
+        }
+
+        document.getElementById('pubFormContent').style.display = 'none';
+        document.getElementById('pubSuccess').style.display = 'block';
+    }
+    function resetBooking() {
+        ['pName','pPhone','pEmail','pMsg'].forEach(id => document.getElementById(id).value = '');
+        document.getElementById('pService').value = '';
+        document.getElementById('pDate').value = '';
+        const btn = document.getElementById('pubSubmitBtn');
+        btn.disabled = false; btn.textContent = 'Request Appointment →';
+        document.getElementById('pubFormContent').style.display = 'block';
+        document.getElementById('pubSuccess').style.display = 'none';
+        document.getElementById('pubMsg').textContent = '';
+    }
+
+    /* ══ ADMIN AUTH ══ */
+    async function adminLogin() {
+        const email = document.getElementById('adminEmail').value.trim();
+        const pass = document.getElementById('adminPass').value;
+        const errEl = document.getElementById('alError');
+        const btn = document.getElementById('alBtn');
+        errEl.style.display = 'none';
+        if (!email || !pass) { errEl.style.display='block'; errEl.textContent='Please enter email and password.'; return; }
+        btn.disabled = true; btn.textContent = 'Signing in…';
+
+        if (sb) {
+            const { data, error } = await sb.auth.signInWithPassword({ email, password: pass });
+            if (error) { btn.disabled=false; btn.textContent='Sign In →'; errEl.style.display='block'; errEl.textContent='Invalid credentials. Please try again.'; return; }
+            currentUser = data.user;
+        } else {
+            /* Demo mode — accept any credentials */
+            currentUser = { email };
+        }
+        document.getElementById('admEmailLbl').textContent = currentUser.email;
+        btn.disabled = false; btn.textContent = 'Sign In →';
+        showView('admin-dashboard');
+        initDashboard();
+    }
+    async function adminLogout() {
+        if (sb) await sb.auth.signOut();
+        currentUser = null;
+        showView('admin-login');
+    }
+    function togglePass() {
+        const i = document.getElementById('adminPass');
+        const b = document.getElementById('passTgl');
+        i.type = i.type === 'password' ? 'text' : 'password';
+        b.textContent = i.type === 'password' ? '👁️' : '🙈';
+    }
+
+    /* ══ DASHBOARD INIT ══ */
+    function initDashboard() {
+        const h = new Date().getHours();
+        document.getElementById('todayLbl').textContent =
+            'Good ' + (h<12?'morning':h<17?'afternoon':'evening') + ' — ' +
+            new Date().toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+        loadAppts();
+    }
+
+    /* ══ DEMO DATA ══ */
+    const demoAppts = [
+        {id:'d1',name:'Ramesh Kumar',phone:'9876543210',email:'ramesh@email.com',service:'Root Canal Treatment',preferred_date:'2024-12-20',message:'Severe tooth pain since 3 days',status:'pending',created_at:new Date().toISOString()},
+        {id:'d2',name:'Kavitha S',phone:'8765432109',email:'',service:'Teeth Whitening',preferred_date:'2024-12-21',message:'',status:'confirmed',created_at:new Date(Date.now()-86400000).toISOString()},
+        {id:'d3',name:'Arjun M',phone:'7654321098',email:'arjun@email.com',service:'Check-up & Cleaning',preferred_date:'2024-12-22',message:'Regular 6-month check-up',status:'completed',created_at:new Date(Date.now()-172800000).toISOString()},
+        {id:'d4',name:'Priya N',phone:'9543210987',email:'',service:'Orthodontics (Braces)',preferred_date:'2024-12-23',message:'Enquiring for daughter aged 14',status:'pending',created_at:new Date(Date.now()-259200000).toISOString()},
+        {id:'d5',name:'Sathish R',phone:'8432109876',email:'sathish@email.com',service:'Dental Implants',preferred_date:'2024-12-19',message:'Missing molar, need consultation',status:'cancelled',created_at:new Date(Date.now()-345600000).toISOString()},
+    ];
+    const demoPatients = [
+        {id:'p1',name:'Ramesh Kumar',phone:'9876543210',email:'ramesh@email.com',dob:'1985-06-15',blood_group:'O+',allergies:'None',address:'12, Anna Nagar, Urapakkam',medical_history:'Diabetic - Type 2',created_at:new Date().toISOString()},
+        {id:'p2',name:'Kavitha S',phone:'8765432109',email:'',dob:'1992-11-20',blood_group:'B+',allergies:'Penicillin',address:'45, GST Road, Urapakkam',medical_history:'',created_at:new Date().toISOString()},
+        {id:'p3',name:'Arjun M',phone:'7654321098',email:'arjun@email.com',dob:'1998-03-08',blood_group:'A+',allergies:'None',address:'78, Gandhi Street, Chengalpattu',medical_history:'',created_at:new Date().toISOString()},
+    ];
+    const demoReports = [
+        {id:'r1',patient_id:'p1',title:'X-Ray – Molar Region',description:'Pre-treatment X-ray for root canal',file_url:'#',file_name:'xray_ramesh_dec24.pdf',file_type:'application/pdf',report_date:'2024-12-19',created_at:new Date().toISOString(),patient_name:'Ramesh Kumar'},
+        {id:'r2',patient_id:'p2',title:'Whitening Treatment Plan',description:'Prescribed shade guide and treatment schedule',file_url:'#',file_name:'whitening_kavitha.pdf',file_type:'application/pdf',report_date:'2024-12-20',created_at:new Date().toISOString(),patient_name:'Kavitha S'},
+    ];
+
+    /* ══ APPOINTMENTS ══ */
+    async function loadAppts() {
+        document.getElementById('apptTableWrap').innerHTML = '<div class="tbl-loading"><i class="fas fa-spinner fa-spin" style="font-size:22px;color:var(--teal)"></i><br/><br/>Loading…</div>';
+        if (sb) {
+            const { data, error } = await sb.from('appointments').select('*').order('created_at', { ascending: false });
+            allAppts = error ? [] : (data || []);
+        } else { allAppts = [...demoAppts]; }
+        updateApptStats();
+        renderAppts();
+    }
+    function updateApptStats() {
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('sTotal').textContent = allAppts.length;
+        document.getElementById('sPending').textContent = allAppts.filter(a=>a.status==='pending').length;
+        document.getElementById('sConfirmed').textContent = allAppts.filter(a=>a.status==='confirmed').length;
+        document.getElementById('sToday').textContent = allAppts.filter(a=>a.preferred_date===today).length;
+    }
+    function renderAppts() {
+        const q = (document.getElementById('apptSearch').value||'').toLowerCase();
+        const data = allAppts.filter(a => {
+            if (apptFilter !== 'all' && a.status !== apptFilter) return false;
+            if (q && !a.name.toLowerCase().includes(q) && !a.phone.includes(q)) return false;
+            return true;
+        });
+        if (!data.length) { document.getElementById('apptTableWrap').innerHTML='<div class="tbl-empty"><i class="fas fa-calendar-times" style="font-size:32px;color:var(--border)"></i><br/><br/>No appointments found.</div>'; return; }
+        let h = `<div style="overflow-x:auto"><table class="main-table"><thead><tr><th>#</th><th>Patient</th><th>Service</th><th>Date</th><th>Status</th><th>Booked</th><th>Actions</th></tr></thead><tbody>`;
+        data.forEach((a,i) => {
+            const d = a.preferred_date ? new Date(a.preferred_date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}) : '—';
+            const cr = new Date(a.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short'});
+            h += `<tr><td style="color:var(--sub);font-size:12px">${i+1}</td>
+      <td><div style="font-weight:700;color:var(--navy);font-size:13px">${a.name}</div><div style="font-size:12px;color:var(--sub)">${a.phone}</div></td>
+      <td style="font-size:12px;max-width:150px">${a.service||'—'}</td>
+      <td style="font-size:12px">${d}</td>
+      <td>${badge(a.status)}</td>
+      <td style="font-size:11px;color:var(--sub)">${cr}</td>
+      <td>
+        <button class="act act-v" onclick="viewAppt('${a.id}')"><i class="fas fa-eye"></i></button>
+        ${a.status==='pending'?`<button class="act act-ok" onclick="updAppt('${a.id}','confirmed')">✓</button>`:''}
+        ${a.status==='confirmed'?`<button class="act act-blue" onclick="updAppt('${a.id}','completed')">Done</button>`:''}
+        ${a.status!=='cancelled'?`<button class="act act-x" onclick="updAppt('${a.id}','cancelled')">✕</button>`:''}
+      </td></tr>`;
+        });
+        h += '</tbody></table></div>';
+        document.getElementById('apptTableWrap').innerHTML = h;
+    }
+    function badge(status) {
+        const map={pending:'badge-pending',confirmed:'badge-confirmed',completed:'badge-completed',cancelled:'badge-cancelled'};
+        const ico={pending:'⏳',confirmed:'✅',completed:'🎉',cancelled:'❌'};
+        return `<span class="badge ${map[status]||'badge-pending'}">${ico[status]||''} ${status}</span>`;
+    }
+    function setApptFilter(f, btn) {
+        apptFilter = f;
+        document.querySelectorAll('.ftab').forEach(t=>t.classList.remove('active'));
+        btn.classList.add('active');
+        renderAppts();
+    }
+    function viewAppt(id) {
+        const a = allAppts.find(x=>x.id===id); if(!a) return;
+        const d = a.preferred_date ? new Date(a.preferred_date).toLocaleDateString('en-IN',{weekday:'long',day:'numeric',month:'long',year:'numeric'}) : 'Not specified';
+        document.getElementById('apptModalTitle').textContent = 'Appointment — ' + a.name;
+        document.getElementById('apptModalBody').innerHTML = `
+    <div class="mdetail"><strong>Patient</strong><span>${a.name}</span></div>
+    <div class="mdetail"><strong>Phone</strong><span>${a.phone}</span></div>
+    <div class="mdetail"><strong>Email</strong><span>${a.email||'—'}</span></div>
+    <div class="mdetail"><strong>Service</strong><span>${a.service||'—'}</span></div>
+    <div class="mdetail"><strong>Preferred Date</strong><span>${d}</span></div>
+    <div class="mdetail"><strong>Message</strong><span>${a.message||'—'}</span></div>
+    <div class="mdetail"><strong>Status</strong><span>${badge(a.status)}</span></div>
+    <div class="mdetail"><strong>Booked On</strong><span>${new Date(a.created_at).toLocaleString('en-IN')}</span></div>`;
+        document.getElementById('apptModalActions').innerHTML = `
+    ${a.status==='pending'?`<button style="background:var(--green);color:#fff" onclick="updAppt('${a.id}','confirmed')">✓ Confirm</button>`:''}
+    ${a.status==='confirmed'?`<button style="background:var(--blue);color:#fff" onclick="updAppt('${a.id}','completed')">Mark Done</button>`:''}
+    ${a.status!=='cancelled'?`<button style="background:var(--orange);color:#fff" onclick="updAppt('${a.id}','cancelled')">✕ Cancel</button>`:''}
+    <button style="background:var(--red);color:#fff" onclick="delAppt('${a.id}')">🗑 Delete</button>
+    <button style="background:var(--off);color:var(--text);border:1px solid var(--border)" onclick="closeModal('apptModal')">Close</button>`;
+        openModal('apptModal');
+    }
+    async function updAppt(id, status) {
+        if (sb) { const{error}=await sb.from('appointments').update({status}).eq('id',id); if(error){toast('Update failed','error');return;} }
+        else { const a=allAppts.find(x=>x.id===id); if(a) a.status=status; }
+        updateApptStats(); renderAppts(); closeModal('apptModal');
+        toast('Appointment ' + status + '!', 'success');
+    }
+    async function delAppt(id) {
+        if (!confirm('Delete this appointment permanently?')) return;
+        if (sb) { const{error}=await sb.from('appointments').delete().eq('id',id); if(error){toast('Delete failed','error');return;} }
+        allAppts = allAppts.filter(a=>a.id!==id);
+        updateApptStats(); renderAppts(); closeModal('apptModal');
+        toast('Appointment deleted', 'success');
+    }
+
+    /* ══ PATIENTS ══ */
+    async function loadPatients() {
+        document.getElementById('patTableWrap').innerHTML = '<div class="tbl-loading"><i class="fas fa-spinner fa-spin" style="font-size:22px;color:var(--teal)"></i><br/><br/>Loading…</div>';
+        if (sb) {
+            const { data, error } = await sb.from('patients').select('*').order('created_at', { ascending: false });
+            allPatients = error ? [] : (data||[]);
+        } else { allPatients = [...demoPatients]; }
+        renderPatients();
+    }
+    function renderPatients() {
+        const q = (document.getElementById('patSearch').value||'').toLowerCase();
+        const data = allPatients.filter(p => !q || p.name.toLowerCase().includes(q) || p.phone.includes(q));
+        if (!data.length) { document.getElementById('patTableWrap').innerHTML='<div class="tbl-empty"><i class="fas fa-user-slash" style="font-size:32px;color:var(--border)"></i><br/><br/>No patients found.</div>'; return; }
+        const colors = ['#1B9AAA','#0B2545','#C9953A','#6B46C1','#276749','#B7791F'];
+        let h = `<div style="overflow-x:auto"><table class="main-table"><thead><tr><th>#</th><th>Patient</th><th>Phone</th><th>Blood</th><th>Allergies</th><th>Since</th><th>Actions</th></tr></thead><tbody>`;
+        data.forEach((p,i)=>{
+            const cr = new Date(p.created_at).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'});
+            const color = colors[i%colors.length];
+            h+=`<tr><td style="color:var(--sub);font-size:12px">${i+1}</td>
+      <td><div style="display:flex;align-items:center;gap:10px"><div style="width:36px;height:36px;border-radius:50%;background:${color};display:flex;align-items:center;justify-content:center;font-weight:800;font-size:14px;color:#fff;flex-shrink:0">${p.name[0]}</div><div><div style="font-weight:700;color:var(--navy);font-size:13px">${p.name}</div><div style="font-size:11px;color:var(--sub)">${p.email||''}</div></div></div></td>
+      <td style="font-size:13px">${p.phone}</td>
+      <td><span class="badge badge-confirmed">${p.blood_group||'—'}</span></td>
+      <td style="font-size:12px;color:var(--sub)">${p.allergies||'None'}</td>
+      <td style="font-size:11px;color:var(--sub)">${cr}</td>
+      <td>
+        <button class="act act-v" onclick="viewPatient('${p.id}')"><i class="fas fa-eye"></i></button>
+        <button class="act act-blue" onclick="editPatient('${p.id}')"><i class="fas fa-edit"></i></button>
+        <button class="act act-purple" onclick="uploadForPatient('${p.id}')"><i class="fas fa-upload"></i></button>
+      </td></tr>`;
+        });
+        h+='</tbody></table></div>';
+        document.getElementById('patTableWrap').innerHTML=h;
+    }
+    function openAddPatient() {
+        editingPatientId=null;
+        document.getElementById('patModalTitle').textContent='Add New Patient';
+        ['pmName','pmPhone','pmEmail','pmAllergies','pmAddress','pmHistory'].forEach(id=>document.getElementById(id).value='');
+        document.getElementById('pmDob').value='';
+        document.getElementById('pmBlood').value='';
+        openModal('patModal');
+    }
+    function editPatient(id) {
+        const p=allPatients.find(x=>x.id===id); if(!p) return;
+        editingPatientId=id;
+        document.getElementById('patModalTitle').textContent='Edit Patient — '+p.name;
+        document.getElementById('pmName').value=p.name||'';
+        document.getElementById('pmPhone').value=p.phone||'';
+        document.getElementById('pmEmail').value=p.email||'';
+        document.getElementById('pmDob').value=p.dob||'';
+        document.getElementById('pmBlood').value=p.blood_group||'';
+        document.getElementById('pmAllergies').value=p.allergies||'';
+        document.getElementById('pmAddress').value=p.address||'';
+        document.getElementById('pmHistory').value=p.medical_history||'';
+        openModal('patModal');
+    }
+    async function savePatient() {
+        const name=document.getElementById('pmName').value.trim();
+        const phone=document.getElementById('pmPhone').value.trim();
+        if(!name||!phone){toast('Name and phone are required','error');return;}
+        const data={name,phone,email:document.getElementById('pmEmail').value.trim(),dob:document.getElementById('pmDob').value||null,blood_group:document.getElementById('pmBlood').value,allergies:document.getElementById('pmAllergies').value.trim(),address:document.getElementById('pmAddress').value.trim(),medical_history:document.getElementById('pmHistory').value.trim()};
+        if(sb){
+            if(editingPatientId){const{error}=await sb.from('patients').update(data).eq('id',editingPatientId);if(error){toast('Save failed','error');return;}}
+            else{const{error}=await sb.from('patients').insert([data]);if(error){toast('Save failed','error');return;}}
+        } else {
+            if(editingPatientId){const p=allPatients.find(x=>x.id===editingPatientId);if(p)Object.assign(p,data);}
+            else{allPatients.unshift({...data,id:'p'+(Date.now()),created_at:new Date().toISOString()});}
+        }
+        closeModal('patModal'); loadPatients(); toast('Patient saved!','success');
+    }
+    function viewPatient(id){const p=allPatients.find(x=>x.id===id);if(!p)return;toast('Viewing: '+p.name,'info');}
+    function uploadForPatient(id){openUploadReport(id);}
+
+    /* ══ REPORTS ══ */
+    async function loadReports() {
+        document.getElementById('rptListWrap').innerHTML='<div class="tbl-loading"><i class="fas fa-spinner fa-spin" style="font-size:22px;color:var(--teal)"></i><br/><br/>Loading…</div>';
+        if(sb){
+            const{data,error}=await sb.from('reports').select('*, patients(name)').order('created_at',{ascending:false});
+            allReports=error?[]:(data||[]).map(r=>({...r,patient_name:r.patients?.name||'—'}));
+        } else { allReports=[...demoReports]; }
+        renderReports();
+    }
+    function renderReports(){
+        const q=(document.getElementById('rptSearch').value||'').toLowerCase();
+        const data=allReports.filter(r=>!q||r.title.toLowerCase().includes(q)||(r.patient_name||'').toLowerCase().includes(q));
+        if(!data.length){document.getElementById('rptListWrap').innerHTML='<div class="tbl-empty"><i class="fas fa-file-medical" style="font-size:32px;color:var(--border)"></i><br/><br/>No reports found.<br/><small>Upload a report using the button above.</small></div>';return;}
+        const typeIcon=(t)=>t?.includes('pdf')?'📄':t?.includes('image')||t?.includes('jpg')||t?.includes('png')?'🖼️':'📁';
+        const typeBg=(t)=>t?.includes('pdf')?'#FFF5F5':t?.includes('image')||t?.includes('jpg')||t?.includes('png')?'#E0F7FA':'#F3E5F5';
+        let h='<div class="rpt-list">';
+        data.forEach(r=>{
+            const d=r.report_date?new Date(r.report_date).toLocaleDateString('en-IN',{day:'numeric',month:'short',year:'numeric'}):'—';
+            h+=`<div class="rpt-row">
+      <div class="rpt-icon" style="background:${typeBg(r.file_type)}">${typeIcon(r.file_type)}</div>
+      <div style="flex:1;min-width:0">
+        <div style="font-weight:700;color:var(--navy);font-size:14px">${r.title}</div>
+        <div style="font-size:12px;color:var(--sub);margin-top:2px">👤 ${r.patient_name} &nbsp;•&nbsp; 📅 ${d}</div>
+        ${r.description?`<div style="font-size:12px;color:var(--sub);margin-top:3px">${r.description}</div>`:''}
+      </div>
+      <div style="display:flex;gap:7px;flex-shrink:0">
+        ${r.file_url&&r.file_url!=='#'?`<a href="${r.file_url}" target="_blank" class="act act-ok" style="display:inline-flex;align-items:center;gap:4px"><i class="fas fa-download"></i> Download</a>`:''}
+        <button class="act act-x" onclick="delReport('${r.id}')"><i class="fas fa-trash"></i></button>
+      </div>
+    </div>`;
+        });
+        h+='</div>';
+        document.getElementById('rptListWrap').innerHTML=h;
+    }
+    function openUploadReport(prePatientId){
+        selectedFile=null;
+        document.getElementById('rptTitle').value='';
+        document.getElementById('rptDesc').value='';
+        document.getElementById('rptDate').value=new Date().toISOString().split('T')[0];
+        document.getElementById('uploadAreaContent').innerHTML=`<i class="fas fa-cloud-upload-alt" style="font-size:36px;color:var(--teal);margin-bottom:10px"></i><div style="font-weight:600;color:var(--navy);margin-bottom:5px">Click or drag file here</div><div style="font-size:13px;color:var(--sub)">PDF, JPG, PNG, DOC (max 10MB)</div>`;
+        document.getElementById('uploadProgress').style.display='none';
+        /* Populate patient dropdown */
+        const sel=document.getElementById('rptPatient');
+        sel.innerHTML='<option value="">Select patient…</option>';
+        const pats=allPatients.length?allPatients:demoPatients;
+        pats.forEach(p=>sel.innerHTML+=`<option value="${p.id}">${p.name} — ${p.phone}</option>`);
+        if(prePatientId) sel.value=prePatientId;
+        openModal('rptModal');
+    }
+    function handleFileSelect(inp){if(inp.files[0]) setFile(inp.files[0]);}
+    function handleDrop(e){e.preventDefault();document.getElementById('uploadArea').classList.remove('dragover');if(e.dataTransfer.files[0]) setFile(e.dataTransfer.files[0]);}
+    function setFile(f){
+        if(f.size>10*1024*1024){toast('File too large (max 10MB)','error');return;}
+        selectedFile=f;
+        const sz=f.size<1024*1024?(f.size/1024).toFixed(1)+'KB':((f.size/1024/1024).toFixed(1))+'MB';
+        document.getElementById('uploadAreaContent').innerHTML=`<i class="fas fa-file-check" style="font-size:36px;color:var(--green);margin-bottom:10px"></i><div style="font-weight:600;color:var(--navy);margin-bottom:5px">${f.name}</div><div style="font-size:13px;color:var(--sub)">${sz} — Ready to upload</div>`;
+    }
+    async function saveReport(){
+        const patId=document.getElementById('rptPatient').value;
+        const title=document.getElementById('rptTitle').value.trim();
+        const desc=document.getElementById('rptDesc').value.trim();
+        const date=document.getElementById('rptDate').value;
+        if(!patId){toast('Please select a patient','error');return;}
+        if(!title){toast('Please enter a report title','error');return;}
+        const btn=document.getElementById('rptSaveBtn');
+        btn.disabled=true; btn.textContent='Uploading…';
+        let fileUrl='', fileName='', fileType='';
+        if(selectedFile){
+            fileName=selectedFile.name; fileType=selectedFile.type;
+            if(sb){
+                const path=`${patId}/${Date.now()}_${fileName}`;
+                const{data,error}=await sb.storage.from('reports').upload(path,selectedFile);
+                if(error){btn.disabled=false;btn.textContent='Upload Report';toast('File upload failed: '+error.message,'error');return;}
+                const{data:urlData}=sb.storage.from('reports').getPublicUrl(path);
+                fileUrl=urlData?.publicUrl||'';
+            } else { fileUrl='#'; }
+        }
+        const record={patient_id:patId,title,description:desc,file_url:fileUrl,file_name:fileName,file_type:fileType,report_date:date||null};
+        if(sb){const{error}=await sb.from('reports').insert([record]);if(error){btn.disabled=false;btn.textContent='Upload Report';toast('Save failed: '+error.message,'error');return;}}
+        else{allReports.unshift({...record,id:'r'+Date.now(),created_at:new Date().toISOString(),patient_name:(allPatients.find(p=>p.id===patId)||{}).name||'—'});}
+        btn.disabled=false; btn.textContent='Upload Report';
+        closeModal('rptModal'); loadReports(); toast('Report uploaded!','success');
+    }
+    async function delReport(id){
+        if(!confirm('Delete this report?'))return;
+        if(sb){const{error}=await sb.from('reports').delete().eq('id',id);if(error){toast('Delete failed','error');return;}}
+        allReports=allReports.filter(r=>r.id!==id);
+        renderReports(); toast('Report deleted','success');
+    }
+
+    /* ══ SETTINGS ══ */
+    function populateSettings(){
+        document.getElementById('ejServiceId').value=CFG.ejServiceId||'';
+        document.getElementById('ejTemplateId').value=CFG.ejTemplateId||'';
+        document.getElementById('ejPublicKey').value=CFG.ejPublicKey||'';
+        document.getElementById('ejToEmail').value=CFG.ejToEmail||'';
+        document.getElementById('waPhone').value=CFG.waPhone||'';
+        document.getElementById('waApiKey').value=CFG.waApiKey||'';
+        document.getElementById('sbUrl').value=CFG.sbUrl||'';
+        document.getElementById('sbKey').value=CFG.sbKey||'';
+    }
+    function saveEmailSettings(){
+        CFG.ejServiceId=document.getElementById('ejServiceId').value.trim();
+        CFG.ejTemplateId=document.getElementById('ejTemplateId').value.trim();
+        CFG.ejPublicKey=document.getElementById('ejPublicKey').value.trim();
+        CFG.ejToEmail=document.getElementById('ejToEmail').value.trim();
+        localStorage.setItem('ej_service',CFG.ejServiceId);
+        localStorage.setItem('ej_template',CFG.ejTemplateId);
+        localStorage.setItem('ej_pubkey',CFG.ejPublicKey);
+        localStorage.setItem('ej_email',CFG.ejToEmail);
+        if(CFG.ejPublicKey) emailjs.init(CFG.ejPublicKey);
+        updateNotifBadges();
+        document.getElementById('ejStatus').innerHTML='<span style="color:var(--green)">✓ Email settings saved!</span>';
+        toast('Email settings saved!','success');
+    }
+    async function testEmail(){
+        if(!CFG.ejServiceId||!CFG.ejTemplateId||!CFG.ejPublicKey){toast('Please save email settings first','error');return;}
+        document.getElementById('ejStatus').innerHTML='<span style="color:var(--teal)">Sending test email…</span>';
+        try{
+            await emailjs.send(CFG.ejServiceId,CFG.ejTemplateId,{to_email:CFG.ejToEmail,patient_name:'Test Patient',patient_phone:'+91 99999 99999',service:'Test Service',preferred_date:'Today',message:'This is a test notification from Happy Dent Admin.',clinic_name:'Happy Dent Dental Care',booking_time:new Date().toLocaleString('en-IN')});
+            document.getElementById('ejStatus').innerHTML='<span style="color:var(--green)">✓ Test email sent successfully!</span>';
+            toast('Test email sent!','success');
+        }catch(e){document.getElementById('ejStatus').innerHTML=`<span style="color:var(--red)">✗ Failed: ${e.text||e.message}</span>`;toast('Email test failed','error');}
+    }
+    function saveWaSettings(){
+        CFG.waPhone=document.getElementById('waPhone').value.trim();
+        CFG.waApiKey=document.getElementById('waApiKey').value.trim();
+        localStorage.setItem('wa_phone',CFG.waPhone);
+        localStorage.setItem('wa_apikey',CFG.waApiKey);
+        updateNotifBadges();
+        document.getElementById('waStatus').innerHTML='<span style="color:var(--green)">✓ WhatsApp settings saved!</span>';
+        toast('WhatsApp settings saved!','success');
+    }
+    async function testWhatsApp(){
+        if(!CFG.waPhone||!CFG.waApiKey){toast('Please save WhatsApp settings first','error');return;}
+        document.getElementById('waStatus').innerHTML='<span style="color:var(--teal)">Sending test WhatsApp…</span>';
+        const msg=encodeURIComponent('🦷 *Test Notification*\nHappy Dent Admin Portal is connected!\nWhatsApp notifications are working correctly.');
+        try{
+            await fetch(`https://api.callmebot.com/whatsapp.php?phone=${CFG.waPhone}&text=${msg}&apikey=${CFG.waApiKey}`);
+            document.getElementById('waStatus').innerHTML='<span style="color:var(--green)">✓ Test WhatsApp sent!</span>';
+            toast('Test WhatsApp sent!','success');
+        }catch(e){document.getElementById('waStatus').innerHTML='<span style="color:var(--red)">✗ Failed. Check phone and API key.</span>';toast('WhatsApp test failed','error');}
+    }
+    function saveSbSettings(){
+        CFG.sbUrl=document.getElementById('sbUrl').value.trim();
+        CFG.sbKey=document.getElementById('sbKey').value.trim();
+        localStorage.setItem('sb_url',CFG.sbUrl);
+        localStorage.setItem('sb_key',CFG.sbKey);
+        if(initSb()) toast('Supabase connected! Please reload.','success');
+        else toast('Settings saved. Add valid URL+Key to connect.','info');
+    }
+
+    /* ══ MODAL HELPERS ══ */
+    function openModal(id){document.getElementById(id).classList.add('open');}
+    function closeModal(id){document.getElementById(id).classList.remove('open');}
+    document.querySelectorAll('.overlay').forEach(el=>el.addEventListener('click',e=>{if(e.target===el)el.classList.remove('open');}));
+
+    /* ══ TOAST ══ */
+    function toast(msg,type=''){const t=document.getElementById('toast');t.textContent=msg;t.className='toast '+(type||'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+
+    /* ══ PUBLIC HEADER ══ */
+    function toggleMenu(){const n=document.getElementById('mobileNav');const o=n.style.display==='flex';n.style.display=o?'none':'flex';document.getElementById('menuBtn').innerHTML=o?'<i class="fas fa-bars"></i>':'<i class="fas fa-times"></i>';}
+    function closeMenu(){document.getElementById('mobileNav').style.display='none';document.getElementById('menuBtn').innerHTML='<i class="fas fa-bars"></i>';}
+    window.addEventListener('scroll',()=>document.getElementById('pub-header')?.classList.toggle('scrolled',window.scrollY>10));
+
+    /* ══ AUTO-RESTORE SESSION ══ */
+    (async()=>{if(sb){const{data}=await sb.auth.getSession();if(data?.session){currentUser=data.session.user;document.getElementById('admEmailLbl').textContent=currentUser.email;}}})();
+</script>
+</body>
+</html>
