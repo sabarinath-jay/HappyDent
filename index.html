@@ -919,6 +919,14 @@ CREATE POLICY "admin_reports" ON reports FOR ALL TO authenticated USING (true);<
         document.getElementById('pubMsg').textContent = '';
     }
 
+    function clearLoginForm() {
+        document.getElementById('adminEmail').value = '';
+        document.getElementById('adminPass').value = '';
+        const errEl = document.getElementById('alError');
+        errEl.style.display = 'none';
+        errEl.textContent = '';
+    }
+
     /* ══ ADMIN AUTH ══ */
     async function adminLogin() {
         const email = document.getElementById('adminEmail').value.trim();
@@ -937,18 +945,22 @@ CREATE POLICY "admin_reports" ON reports FOR ALL TO authenticated USING (true);<
             currentUser = { email: data.email };
             document.getElementById('admEmailLbl').textContent = currentUser.email;
             btn.disabled = false; btn.textContent = 'Sign In →';
+            clearLoginForm();
             closeModal('adminLoginModal');
             showView('admin-dashboard');
             initDashboard();
         } catch (e) {
             btn.disabled = false; btn.textContent = 'Sign In →';
             errEl.style.display = 'block';
-            errEl.textContent = 'Invalid credentials. Please try again.';
+            errEl.textContent = e.message?.includes('429') || e.status === 429
+                ? e.message || 'Too many failed attempts. Try again in 15 minutes.'
+                : 'Invalid credentials. Please try again.';
         }
     }
     async function adminLogout() {
         clearToken();
         currentUser = null;
+        clearLoginForm();
         showView('public');
     }
     function togglePass() {
