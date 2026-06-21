@@ -1,0 +1,21 @@
+# IDE
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Maven build output
+backend/target/
+target/
+
+# H2 database files (local dev only)
+backend/data/
+data/
+
+# Uploaded files (local dev only)
+backend/uploads/
+uploads/
+
+# OS
+.DS_Store
+Thumbs.db
