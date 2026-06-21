@@ -1311,15 +1311,16 @@ CREATE POLICY "admin_reports" ON reports FOR ALL TO authenticated USING (true);<
         const token = getToken();
         if (token) {
             try {
-                /* Validate token by hitting a protected endpoint */
-                const appts = await api('/api/appointments');
-                /* Token valid — derive email from JWT payload (middle segment) */
                 const payload = JSON.parse(atob(token.split('.')[1]));
+                if (payload.exp * 1000 < Date.now()) throw new Error('expired');
+                const appts = await api('/api/appointments');
                 currentUser = { email: payload.sub };
                 document.getElementById('admEmailLbl').textContent = currentUser.email;
                 allAppts = appts;
+                showView('admin-dashboard');
+                initDashboard();
             } catch (e) {
-                clearToken(); /* Token expired or invalid — force re-login */
+                clearToken();
             }
         }
     })();
