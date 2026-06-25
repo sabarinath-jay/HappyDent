@@ -21,10 +21,9 @@ public class StaticDataController {
         return ResponseEntity.ok(List.of(
             Map.of("icon","🦷","title","Check-up & Cleaning","desc","Comprehensive oral exam with professional scaling and polishing.","bg","#E0F7FA"),
             Map.of("icon","🔬","title","Root Canal Treatment","desc","Advanced therapy to save infected teeth with minimal discomfort.","bg","#E8F5E9"),
-            Map.of("icon","✨","title","Teeth Whitening","desc","Professional bleaching for a noticeably brighter, whiter smile.","bg","#FFF8E1"),
             Map.of("icon","🦿","title","Dental Implants","desc","Permanent tooth replacement that looks and feels completely natural.","bg","#F3E5F5"),
             Map.of("icon","📐","title","Orthodontics","desc","Braces and clear aligners for a perfect, confident smile.","bg","#E3F2FD"),
-            Map.of("icon","💎","title","Smile Makeover","desc","Veneers, whitening, and contouring for your dream smile.","bg","#FCE4EC"),
+            Map.of("icon","💎","title","Smile Makeover","desc","Veneers, contouring, and bonding for your dream smile.","bg","#FCE4EC"),
             Map.of("icon","👶","title","Pediatric Dentistry","desc","Gentle, child-friendly care that builds positive dental habits.","bg","#FFF3E0"),
             Map.of("icon","🔧","title","Tooth Extraction","desc","Safe removal of problematic and wisdom teeth with expert aftercare.","bg","#E8EAF6"),
             Map.of("icon","👑","title","Crowns & Bridges","desc","Quality porcelain restorations that look and function naturally.","bg","#E0F2F1"),
@@ -43,8 +42,8 @@ public class StaticDataController {
                    "txt","\"Absolutely thrilled with my smile makeover results. Incredible team!\""),
             Map.of("name","Anand M.","r",4,"date","December 2023","t","Braces","c","#6B46C1",
                    "txt","\"Great clinic with professional staff. The doctor follows up regularly.\""),
-            Map.of("name","Deepa S.","r",5,"date","November 2023","t","Teeth Whitening","c","#B7791F",
-                   "txt","\"Amazing whitening results — I can't stop smiling! Friendly staff.\""),
+            Map.of("name","Deepa S.","r",5,"date","November 2023","t","Smile Makeover","c","#B7791F",
+                   "txt","\"Amazing results — I can't stop smiling! Friendly and professional staff.\""),
             Map.of("name","Rajesh P.","r",5,"date","October 2023","t","Check-up & Cleaning","c","#276749",
                    "txt","\"Best clinic in Urapakkam. Affordable and top-notch quality.\"")
         ));
