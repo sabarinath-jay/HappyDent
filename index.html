@@ -612,100 +612,63 @@
 
             <div class="settings-grid">
 
-                <!-- EmailJS -->
+                <!-- Gmail Email -->
                 <div class="set-card">
-                    <h3><i class="fas fa-envelope" style="color:var(--teal)"></i> Email Notifications</h3>
-                    <p>Get an email whenever a new appointment is booked. Uses <strong>EmailJS</strong> — free up to 200 emails/month. <a href="https://emailjs.com" target="_blank" style="color:var(--teal)">Setup at emailjs.com →</a></p>
-                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">EmailJS Service ID</label>
-                    <input class="set-inp" id="ejServiceId" placeholder="service_xxxxxxx"/>
-                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">EmailJS Template ID</label>
-                    <input class="set-inp" id="ejTemplateId" placeholder="template_xxxxxxx"/>
-                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">EmailJS Public Key</label>
-                    <input class="set-inp" id="ejPublicKey" placeholder="xxxxxxxxxxxxxxxxxxxx"/>
-                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Notify Email (clinic email)</label>
-                    <input class="set-inp" id="ejToEmail" placeholder="admin@happydentclinic.in"/>
-                    <div style="display:flex;gap:9px;margin-top:4px">
-                        <button class="set-btn set-save" onclick="saveEmailSettings()">Save</button>
-                        <button class="set-btn set-test" onclick="testEmail()">Send Test</button>
+                    <h3><i class="fas fa-envelope" style="color:#EA4335"></i> Gmail Notifications</h3>
+                    <p>Receive an email at <strong>j.sabarinath@gmail.com</strong> whenever a patient books a new appointment — powered by Gmail SMTP.</p>
+                    <div id="emailStatusBadge" style="display:flex;align-items:center;gap:8px;background:#F5F5F5;border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-bottom:16px;font-size:13px;color:var(--sub)">
+                        <i class="fas fa-circle-notch fa-spin"></i> Checking…
                     </div>
-                    <div id="ejStatus" style="margin-top:10px;font-size:13px"></div>
+                    <div style="background:#FFFBF0;border:1px solid #F6CC75;border-radius:10px;padding:14px;margin-bottom:16px;font-size:13px;color:#7A5C00;line-height:1.8">
+                        <strong>One-time setup (if not yet done):</strong><br/>
+                        1. Go to <a href="https://myaccount.google.com/apppasswords" target="_blank" style="color:var(--teal)">myaccount.google.com/apppasswords</a><br/>
+                        2. Create an App Password → name it <strong>HappyDent</strong><br/>
+                        3. In Railway → your app → Variables, add:<br/>
+                        &nbsp;&nbsp;<code style="background:rgba(0,0,0,.08);padding:2px 6px;border-radius:4px">SPRING_MAIL_PASSWORD</code> = the 16-char password<br/>
+                        &nbsp;&nbsp;<code style="background:rgba(0,0,0,.08);padding:2px 6px;border-radius:4px">APP_NOTIFICATION_EMAIL_ENABLED</code> = <code style="background:rgba(0,0,0,.08);padding:2px 6px;border-radius:4px">true</code>
+                    </div>
+                    <button class="set-btn set-test" onclick="testEmailNotification()" style="width:100%"><i class="fas fa-paper-plane" style="margin-right:6px"></i>Send Test Email</button>
+                    <div id="emailTestStatus" style="margin-top:10px;font-size:13px"></div>
                 </div>
 
-                <!-- WhatsApp / Callmebot -->
+                <!-- WhatsApp -->
                 <div class="set-card">
-                    <h3><i class="fab fa-whatsapp" style="color:#25D366"></i> WhatsApp Notifications</h3>
-                    <p>Get a WhatsApp message for every new booking. Uses <strong>CallMeBot</strong> — completely free. <a href="https://www.callmebot.com/blog/free-api-whatsapp-messages/" target="_blank" style="color:var(--teal)">Activate at callmebot.com →</a></p>
-                    <div style="background:#F0FFF4;border:1px solid #9AE6B4;border-radius:10px;padding:14px;margin-bottom:14px;font-size:13px;color:#276749;line-height:1.7">
-                        <strong>One-time activation:</strong><br/>
-                        Send <code style="background:rgba(0,0,0,.08);padding:2px 5px;border-radius:4px">I allow callmebot to send me messages</code> on WhatsApp to <strong>+34 644 65 22 25</strong>. You'll receive your API key instantly.
+                    <h3><i class="fab fa-whatsapp" style="color:#25D366"></i> WhatsApp</h3>
+                    <p>Patients can message you on WhatsApp instantly from any page on the website — no API configuration required.</p>
+                    <div style="background:#F0FFF4;border:1px solid #9AE6B4;border-radius:10px;padding:14px;margin-bottom:16px;font-size:13px;color:#276749;line-height:1.8">
+                        <i class="fas fa-check-circle" style="margin-right:4px"></i> <strong>WhatsApp button is live on your website</strong><br/>
+                        Linked to: <strong>+91 72992 47236</strong><br/>
+                        Active on: Hero section · Contact card · Floating button · Footer
                     </div>
-                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Your WhatsApp Number (with country code)</label>
-                    <input class="set-inp" id="waPhone" placeholder="+919XXXXXXXXX"/>
-                    <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Callmebot API Key</label>
-                    <input class="set-inp" id="waApiKey" placeholder="xxxxxxx"/>
-                    <div style="display:flex;gap:9px;margin-top:4px">
-                        <button class="set-btn set-save" onclick="saveWaSettings()">Save</button>
-                        <button class="set-btn set-test" onclick="testWhatsApp()">Send Test</button>
-                    </div>
-                    <div id="waStatus" style="margin-top:10px;font-size:13px"></div>
+                    <a href="https://wa.me/917299247236?text=Hi%2C+I'd+like+to+book+a+dental+appointment+at+Happy+Dent+Dental+Care." target="_blank"
+                       style="display:flex;align-items:center;justify-content:center;gap:8px;background:#25D366;color:#fff;border:none;border-radius:10px;padding:11px 18px;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer">
+                        <i class="fab fa-whatsapp"></i> Test WhatsApp Link
+                    </a>
                 </div>
 
-                <!-- Supabase Config -->
+                <!-- PostgreSQL Database -->
                 <div class="set-card" style="grid-column:1/-1">
-                    <h3><i class="fas fa-database" style="color:var(--navy)"></i> Supabase Database Setup</h3>
-                    <p>Connect your Supabase database for persistent appointment, patient and report storage. Free tier available at <a href="https://supabase.com" target="_blank" style="color:var(--teal)">supabase.com</a></p>
-                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px">
-                        <div>
-                            <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Supabase Project URL</label>
-                            <input class="set-inp" id="sbUrl" placeholder="https://xxxx.supabase.co"/>
+                    <h3><i class="fas fa-database" style="color:var(--navy)"></i> Database</h3>
+                    <p>Your data is stored in a Railway PostgreSQL database with a persistent volume — no data loss on redeploys.</p>
+                    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:14px">
+                        <div style="background:#EEF2FF;border-radius:12px;padding:16px;text-align:center">
+                            <div style="font-size:22px;margin-bottom:6px">🐘</div>
+                            <div style="font-size:12px;font-weight:700;color:var(--navy)">Engine</div>
+                            <div style="font-size:13px;color:var(--sub);margin-top:2px">PostgreSQL 16</div>
                         </div>
-                        <div>
-                            <label style="font-size:11px;font-weight:700;color:var(--sub);text-transform:uppercase;letter-spacing:.5px;display:block;margin-bottom:5px">Supabase Anon Key</label>
-                            <input class="set-inp" id="sbKey" placeholder="eyJxxxxxxxx…"/>
+                        <div style="background:#F0FFF4;border-radius:12px;padding:16px;text-align:center">
+                            <div style="font-size:22px;margin-bottom:6px">☁️</div>
+                            <div style="font-size:12px;font-weight:700;color:var(--navy)">Host</div>
+                            <div style="font-size:13px;color:var(--sub);margin-top:2px">Railway (postgres-volume)</div>
+                        </div>
+                        <div style="background:#FFF5F5;border-radius:12px;padding:16px;text-align:center">
+                            <div style="font-size:22px;margin-bottom:6px">🔒</div>
+                            <div style="font-size:12px;font-weight:700;color:var(--navy)">Persistence</div>
+                            <div style="font-size:13px;color:var(--sub);margin-top:2px">Survives redeploys</div>
                         </div>
                     </div>
-                    <button class="set-btn set-save" onclick="saveSbSettings()" style="margin-bottom:20px">Save & Reconnect</button>
-                    <div style="border-top:1px solid var(--border);padding-top:18px"><strong style="font-size:14px;color:var(--navy)">Run this SQL in Supabase → SQL Editor:</strong>
-                        <pre class="code">-- Appointments table
-CREATE TABLE IF NOT EXISTS appointments (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  name TEXT NOT NULL, phone TEXT NOT NULL, email TEXT,
-  service TEXT, preferred_date DATE, message TEXT,
-  status TEXT DEFAULT 'pending', notes TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Patients table
-CREATE TABLE IF NOT EXISTS patients (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  name TEXT NOT NULL, phone TEXT NOT NULL, email TEXT,
-  dob DATE, blood_group TEXT, address TEXT,
-  allergies TEXT, medical_history TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Reports table
-CREATE TABLE IF NOT EXISTS reports (
-  id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
-  patient_id UUID REFERENCES patients(id) ON DELETE CASCADE,
-  title TEXT NOT NULL, description TEXT,
-  file_url TEXT, file_name TEXT, file_type TEXT,
-  report_date DATE DEFAULT CURRENT_DATE,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- Storage bucket (run separately or create in Supabase dashboard)
--- INSERT INTO storage.buckets (id, name, public) VALUES ('reports', 'reports', false);
-
--- Row Level Security
-ALTER TABLE appointments ENABLE ROW LEVEL SECURITY;
-ALTER TABLE patients ENABLE ROW LEVEL SECURITY;
-ALTER TABLE reports ENABLE ROW LEVEL SECURITY;
-
-CREATE POLICY "public_book" ON appointments FOR INSERT TO anon WITH CHECK (true);
-CREATE POLICY "admin_appts" ON appointments FOR ALL TO authenticated USING (true);
-CREATE POLICY "admin_patients" ON patients FOR ALL TO authenticated USING (true);
-CREATE POLICY "admin_reports" ON reports FOR ALL TO authenticated USING (true);</pre>
+                    <div id="dbStatusBadge" style="display:flex;align-items:center;gap:8px;background:#F5F5F5;border:1px solid var(--border);border-radius:10px;padding:12px 14px;margin-top:14px;font-size:13px;color:var(--sub)">
+                        <i class="fas fa-circle-notch fa-spin"></i> Checking connection…
                     </div>
                 </div>
 
@@ -1286,23 +1249,48 @@ CREATE POLICY "admin_reports" ON reports FOR ALL TO authenticated USING (true);<
     }
 
     /* ══ SETTINGS ══ */
-    function populateSettings() {
-        /* Settings are now configured in backend application.properties.
-           Show current backend URL for reference. */
-        const sbUrlEl = document.getElementById('sbUrl');
-        const sbKeyEl = document.getElementById('sbKey');
-        if (sbUrlEl) sbUrlEl.value = API_BASE;
-        if (sbKeyEl) sbKeyEl.value = '(managed by backend)';
-        document.getElementById('ejStatus').innerHTML =
-            '<span style="color:var(--teal)">Email notifications configured in backend <code>application.properties</code>.</span>';
-        document.getElementById('waStatus').innerHTML =
-            '<span style="color:var(--teal)">WhatsApp notifications configured in backend <code>application.properties</code>.</span>';
+    async function populateSettings() {
+        try {
+            const s = await api('/api/admin/settings/status');
+            const emailBadge = document.getElementById('emailStatusBadge');
+            if (s.emailEnabled) {
+                emailBadge.style.background = '#F0FFF4';
+                emailBadge.style.borderColor = '#9AE6B4';
+                emailBadge.style.color = '#276749';
+                emailBadge.innerHTML = '<i class="fas fa-check-circle"></i> <strong>Active</strong> — sending to ' + (s.emailTo || s.emailFrom);
+            } else {
+                emailBadge.style.background = '#FFF5F5';
+                emailBadge.style.borderColor = '#FEB2B2';
+                emailBadge.style.color = '#C53030';
+                emailBadge.innerHTML = '<i class="fas fa-exclamation-circle"></i> <strong>Not configured</strong> — follow the setup steps below';
+            }
+            const dbBadge = document.getElementById('dbStatusBadge');
+            dbBadge.style.background = '#F0FFF4';
+            dbBadge.style.borderColor = '#9AE6B4';
+            dbBadge.style.color = '#276749';
+            dbBadge.innerHTML = '<i class="fas fa-check-circle"></i> <strong>Connected</strong> — ' + s.dbType;
+        } catch (e) {
+            const emailBadge = document.getElementById('emailStatusBadge');
+            if (emailBadge) { emailBadge.style.color='var(--sub)'; emailBadge.innerHTML='<i class="fas fa-exclamation-triangle"></i> Could not reach backend'; }
+        }
     }
-    function saveEmailSettings() { toast('Email settings are configured in backend application.properties', 'info'); }
-    function testEmail() { toast('Use backend logs to verify email notifications', 'info'); }
-    function saveWaSettings() { toast('WhatsApp settings are configured in backend application.properties', 'info'); }
-    function testWhatsApp() { toast('Use backend logs to verify WhatsApp notifications', 'info'); }
-    function saveSbSettings() { toast('Database is configured in backend application.properties', 'info'); }
+    async function testEmailNotification() {
+        const statusEl = document.getElementById('emailTestStatus');
+        statusEl.innerHTML = '<i class="fas fa-circle-notch fa-spin" style="color:var(--teal)"></i> Sending…';
+        try {
+            const res = await fetch(API_BASE + '/api/admin/settings/test-email', {
+                method: 'POST', headers: { 'Authorization': 'Bearer ' + getToken() }
+            });
+            const data = await res.json();
+            if (res.ok) {
+                statusEl.innerHTML = '<span style="color:#276749"><i class="fas fa-check-circle"></i> ' + data.message + '</span>';
+            } else {
+                statusEl.innerHTML = '<span style="color:#C53030"><i class="fas fa-times-circle"></i> ' + data.message + '</span>';
+            }
+        } catch (e) {
+            statusEl.innerHTML = '<span style="color:#C53030"><i class="fas fa-times-circle"></i> Network error — check backend is running</span>';
+        }
+    }
 
     /* ══ MODAL HELPERS ══ */
     function openModal(id){document.getElementById(id).classList.add('open');}

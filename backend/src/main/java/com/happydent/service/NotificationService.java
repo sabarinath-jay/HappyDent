@@ -34,6 +34,21 @@ public class NotificationService {
         if (waEnabled) sendWhatsApp(appt);
     }
 
+    public boolean sendTestEmail() {
+        try {
+            SimpleMailMessage msg = new SimpleMailMessage();
+            msg.setFrom(emailFrom);
+            msg.setTo(emailTo.isEmpty() ? emailFrom : emailTo);
+            msg.setSubject("Test – Happy Dent Email Notifications");
+            msg.setText("Gmail SMTP is working correctly.\n\nYou will receive this email whenever a patient books an appointment at Happy Dent Dental Care.");
+            mailSender.send(msg);
+            return true;
+        } catch (Exception e) {
+            log.warn("Test email failed: {}", e.getMessage());
+            return false;
+        }
+    }
+
     private void sendEmail(Appointment appt) {
         try {
             SimpleMailMessage msg = new SimpleMailMessage();
